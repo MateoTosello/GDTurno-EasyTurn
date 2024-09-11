@@ -29,4 +29,44 @@ public class HealthInsurance {
 //    @ManyToMany(mappedBy = "specialities")
 //    private Set<Professional> professionals;
 
+
+    public int getHealthInsuranceNumber() {
+        return healthInsuranceNumber;
+    }
+
+    public void setHealthInsuranceNumber(int healthInsuranceNumber) {
+        this.healthInsuranceNumber = healthInsuranceNumber;
+    }
+
+    public String getHealthInsurancePlan() {
+        return healthInsurancePlan;
+    }
+
+    public void setHealthInsurancePlan(String healthInsurancePlan) {
+        this.healthInsurancePlan = healthInsurancePlan;
+    }
+
+    public String getHealthInsuranceName() {
+        return healthInsuranceName;
+    }
+
+    public void setHealthInsuranceName(String healthInsuranceName) {
+        this.healthInsuranceName = healthInsuranceName;
+    }
+
+    public String getHealthInsuranceExpirationDate() {
+        return healthInsuranceExpirationDate;
+    }
+
+    public void setHealthInsuranceExpirationDate(String healthInsuranceExpirationDate) {
+        this.healthInsuranceExpirationDate = healthInsuranceExpirationDate;
+    }
+
+    public Set<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(Set<Patient> patients) {
+        this.patients = patients;
+    }
 }
