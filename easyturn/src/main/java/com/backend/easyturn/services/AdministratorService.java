@@ -22,6 +22,7 @@ public class AdministratorService {
     public void deleteAdministrator(int idAdministrator) {
         this.administratorRepository.deleteById(idAdministrator);
     }
+
     public Administrator getAdministrator(int idAdministrator) {
         return this.administratorRepository.findById(idAdministrator).get();
     }
