@@ -27,16 +27,13 @@ public class AdministratorController {
     @ResponseBody
     public ResponseEntity<List<AdministratorDTO>> getAdministrators(){
         List<AdministratorDTO> administrators = this.administratorService.getAllAdministrator();
-        if(administrators.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-        }
         return new ResponseEntity<>(administrators, HttpStatus.OK);
     }
 
     @DeleteMapping(path="/delete/{id}")
-    public ResponseEntity deleteAdministrator(@PathVariable int id) {
+    public ResponseEntity<String> deleteAdministrator(@PathVariable int id) {
         this.administratorService.deleteAdministrator(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Administrador eliminado correctamente",HttpStatus.OK);
     }
 
     @GetMapping(path = "/get-administrator/{idAdmin}")
