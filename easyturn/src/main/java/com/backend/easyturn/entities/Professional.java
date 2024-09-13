@@ -12,14 +12,14 @@ import java.util.Set;
 public class Professional {
 
     @Id
-    @Column
+    @Column()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProfessional;
 
-    @Column(name = "professional_registration", unique = true)
+    @Column(unique = true)
     private String professionalRegistration; //Matricula del profesional
 
-    @Column
+    @Column()
     private String professionalName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "professional", cascade = CascadeType.ALL)
