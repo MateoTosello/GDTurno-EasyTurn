@@ -35,5 +35,4 @@ public class Professional {
             inverseJoinColumns = @JoinColumn(name = "idSpeciality")
     )
     private Set<Speciality> specialities;
-
 }
