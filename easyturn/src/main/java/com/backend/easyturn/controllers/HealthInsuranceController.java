@@ -17,28 +17,28 @@ public class HealthInsuranceController {
     @Autowired
     HealthInsuranceService healthInsuranceService;
 
-    @GetMapping()
+    @GetMapping(value = "/get-all-healthinsuranse")
     public List<HealthInsurance> getHealthInsurance() {
         return this.healthInsuranceService.getAllHealthInsurances();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/get-healthinsuranse/{id}")
     public HealthInsurance getOneHealthInsurance(@PathVariable int id) {
         return this.healthInsuranceService.getOneHealthInsurance(id);
     }
 
-    @PostMapping()
+    @PostMapping(value = "/post-healthinsurance")
     @ResponseBody
     public long createHealthInsurance(@RequestBody HealthInsurance healthInsurance) {
         return this.healthInsuranceService.createHealthInsurance(healthInsurance);
     };
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete-healthinsurance/{id}")
     public boolean deleteHealthInsurance(@PathVariable int id){
         return this.healthInsuranceService.deleteHealthInsurance(id);
     };
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/update-healthinsurance/{id}")
     public HealthInsurance updateHealthInsurance(@RequestBody HealthInsurance healthInsurance,@PathVariable int id){
         return this.healthInsuranceService.updateHealthInsurance(healthInsurance,id);
     }
