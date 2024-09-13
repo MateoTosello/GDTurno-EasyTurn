@@ -20,8 +20,8 @@ public class ProfessionalController {
 
     @PostMapping("/post")
     @ResponseBody
-    public ResponseEntity<Professional> createProfessional(@RequestBody Professional professional) {
-        Professional professionalCreated = this.professionalService.createProfessional(professional);
+    public ResponseEntity<Professional> createProfessional( @RequestBody Professional professional, @RequestParam List<Integer> specialitiesIds) {
+        Professional professionalCreated = this.professionalService.createProfessional(professional,specialitiesIds);
         return new ResponseEntity<>(professionalCreated, HttpStatus.CREATED);
     }
 
