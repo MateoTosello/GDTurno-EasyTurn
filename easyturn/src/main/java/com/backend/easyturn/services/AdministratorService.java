@@ -71,7 +71,7 @@ public class AdministratorService {
             throw new AppException(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
-
+  
     public AdministratorDTO updateAdministrator (Administrator administrator) {
         try{
             Administrator adminFound = this.administratorRepository.findByMail(administrator.getMail());
