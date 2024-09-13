@@ -39,9 +39,10 @@ public class InstitutionController {
     }
 
     @DeleteMapping("/delete-institution/{id}")
-    public ResponseEntity<Void> deleteInstitution(@PathVariable int id) {
+    @ResponseBody
+    public ResponseEntity<String> deleteInstitution(@PathVariable int id) {
         this.institutionService.deleteInstitution(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Institucion eliminada correctamente",HttpStatus.OK);
     }
 
     @PutMapping("/update-institution")
