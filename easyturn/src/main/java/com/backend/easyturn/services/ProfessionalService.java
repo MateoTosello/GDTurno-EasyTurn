@@ -59,9 +59,9 @@ public class ProfessionalService {
         }
     }
 
-    public Professional updateProfessional(Professional professional){
+    public Professional updateProfessional(Professional professional, int id){
         try{
-            Professional prof = this.professionalRepository.findById(professional.getIdProfessional())
+            Professional prof = this.professionalRepository.findById(id)
                     .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
             prof.setProfessionalRegistration(professional.getProfessionalRegistration());
             prof.setProfessionalName(professional.getProfessionalName());

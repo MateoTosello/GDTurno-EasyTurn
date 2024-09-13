@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/institution")
+@RequestMapping("/professional")
 public class ProfessionalController {
 
     @Autowired
@@ -46,10 +46,10 @@ public class ProfessionalController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/update-professional")
+    @PutMapping("/update-professional/{id}")
     @ResponseBody
-    public ResponseEntity<Professional> updateProfessional(@RequestBody Professional professional) {
-        Professional professionalUpdated = this.professionalService.updateProfessional(professional);
+    public ResponseEntity<Professional> updateProfessional(@RequestBody Professional professional, @PathVariable int id) {
+        Professional professionalUpdated = this.professionalService.updateProfessional(professional,id);
         return new ResponseEntity<>(professionalUpdated, HttpStatus.OK);
     }
 
