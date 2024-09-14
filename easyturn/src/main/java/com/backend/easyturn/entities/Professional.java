@@ -42,6 +42,7 @@ public class Professional {
             joinColumns = @JoinColumn(name = "idProfessional"),
             inverseJoinColumns = @JoinColumn(name = "idSpeciality")
     )
+
     private Set<Speciality> specialities = new HashSet<>();
 
     @ManyToMany()
@@ -71,7 +72,5 @@ public class Professional {
                 .toList());
         return dto;
     }
-
-
 
 }

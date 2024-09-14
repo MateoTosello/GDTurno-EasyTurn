@@ -34,7 +34,7 @@ public class ProfessionalService {
             if (prof != null) {
                 throw new AppException("El profesional ya se encuentra registrado", HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
+          
             Set<Speciality> specialities = new HashSet<>(specialityRepository.findAllById(specialitiesIds));
             if (specialities.size() != specialitiesIds.size()) {
                 throw new AppException("Una o más especialidades no encontradas", HttpStatus.INTERNAL_SERVER_ERROR);

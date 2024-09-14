@@ -40,6 +40,7 @@ public class Patient {
     @Column(nullable = false)
     private String phoneNumber;
 
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<Appointment> appointments;
 
