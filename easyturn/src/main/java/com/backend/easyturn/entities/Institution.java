@@ -15,16 +15,17 @@ import java.util.Set;
 public class Institution {
 
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_institution")
     private int idInstitution;
 
-    @Column
+    @Column(name = "institution_name")
     private String institutionName;
 
-    @Column
+    @Column(name = "institution_address")
     private String institutionAddress;
 
-    @Column
+    @Column(name = "institution_address_number")
     private String institutionAddressNumber;
 
     @ManyToMany()
