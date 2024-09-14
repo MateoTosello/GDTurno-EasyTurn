@@ -40,6 +40,12 @@ public class Patient {
     @Column(nullable = false)
     private String phoneNumber;
 
+    @Column(nullable = false, unique=true)
+    private String mail;
+
+    @Column()
+    private String password;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<Appointment> appointments;
 
