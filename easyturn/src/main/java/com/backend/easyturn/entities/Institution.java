@@ -1,5 +1,7 @@
 package com.backend.easyturn.entities;
 
+import com.backend.easyturn.entities.DTOs.InstitutionDTO;
+import com.backend.easyturn.entities.DTOs.SpecialityDTO;
 import jakarta.persistence.*;
 
 import lombok.Getter;
@@ -28,11 +30,19 @@ public class Institution {
     @Column(name = "institution_address_number")
     private String institutionAddressNumber;
 
-    @ManyToMany()
-    @JoinTable(
-            name = "institution_professional",
-            joinColumns = @JoinColumn(name = "idInstitution"),
-            inverseJoinColumns = @JoinColumn(name = "idProfessional")
-    )
-    private Set<Professional> professionals = new HashSet<>();
+    @ManyToMany(mappedBy = "institutions")
+    Set<Professional> professionals = new HashSet<>();
+
+
+    public InstitutionDTO toDTO() {
+        InstitutionDTO dto = new InstitutionDTO();
+        dto.setId(this.idInstitution);
+        dto.setInstitutionName(this.institutionName);
+        dto.setInstitutionAddress(this.institutionAddress);
+        dto.setInstitutionAddressNumber(this.institutionAddressNumber);
+        dto.setProfessionalNames(this.professionals.stream()
+                .map(Professional::getProfessionalName)
+                .toList());
+        return dto;
+    }
 }

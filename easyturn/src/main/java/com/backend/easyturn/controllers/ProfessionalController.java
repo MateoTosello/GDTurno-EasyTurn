@@ -1,5 +1,6 @@
 package com.backend.easyturn.controllers;
 
+import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.requests.ProfessionalRequest;
 import com.backend.easyturn.services.ProfessionalService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -21,23 +23,26 @@ public class ProfessionalController {
 
     @PostMapping("/post")
     @ResponseBody
-    public ResponseEntity<Professional> createProfessional(@RequestBody ProfessionalRequest request) {
-        Professional professionalCreated = this.professionalService.createProfessional(request.getProfessional(), request.getSpecialitiesIds());
-        return new ResponseEntity<>(professionalCreated, HttpStatus.CREATED);
+    public ResponseEntity<ProfessionalDTO> createProfessional(@RequestBody ProfessionalRequest request) {
+        Professional professionalCreated = this.professionalService.createProfessional(request.getProfessional(), request.getSpecialitiesIds(), request.getInstitutionsIds());
+        return new ResponseEntity<>(professionalCreated.toDTO(), HttpStatus.CREATED);
     }
 
     @GetMapping("/get-professional/{id}")
     @ResponseBody
-    public ResponseEntity<Professional> getProfessional(@PathVariable int id) {
+    public ResponseEntity<ProfessionalDTO> getProfessional(@PathVariable int id) {
         Professional professional = this.professionalService.getProfessional(id);
-        return new ResponseEntity<>(professional, HttpStatus.OK);
+        return new ResponseEntity<>(professional.toDTO(), HttpStatus.OK);
     }
 
     @GetMapping("/get-all-professionals")
     @ResponseBody
-    public ResponseEntity<List<Professional>> getAll() {
+    public ResponseEntity<List<ProfessionalDTO>> getAll() {
         List<Professional> professionals = this.professionalService.getAllProfessionals();
-        return new ResponseEntity<>(professionals, HttpStatus.OK);
+        List<ProfessionalDTO> professionalsDTO = professionals.stream()
+                .map(Professional::toDTO)
+                .toList();
+        return new ResponseEntity<>(professionalsDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-professional/{id}")
@@ -49,9 +54,9 @@ public class ProfessionalController {
 
     @PutMapping("/update-professional")
     @ResponseBody
-    public ResponseEntity<Professional> updateProfessional(@RequestBody Professional professional) {
+    public ResponseEntity<ProfessionalDTO> updateProfessional(@RequestBody Professional professional) {
         Professional professionalUpdated = this.professionalService.updateProfessional(professional);
-        return new ResponseEntity<>(professionalUpdated, HttpStatus.OK);
+        return new ResponseEntity<>(professionalUpdated.toDTO(), HttpStatus.OK);
     }
 
 
