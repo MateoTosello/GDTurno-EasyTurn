@@ -25,8 +25,11 @@ public class Patient {
     @Column(nullable = false, unique=true)
     private int IDCardNumber;
 
-    @Column(name = "patient_email", nullable = false, unique=true)
-    private String patientEmail;
+    @Column(nullable = false, unique=true)
+    private String mail;
+
+    @Column()
+    private String password;
 
     @Column(nullable = false)
     private int birthDate;

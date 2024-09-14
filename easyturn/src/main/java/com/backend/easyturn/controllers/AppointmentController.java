@@ -14,13 +14,13 @@ public class AppointmentController {
     @Autowired
     AppointmentService appointmentService;
 
-    @GetMapping("/getAppointments")
+    @GetMapping("/get-appointments")
     @ResponseBody
     public List<Appointment> getAppointments() {
         return this.appointmentService.getAllAppointments();
     }
 
-    @GetMapping("/getAppointment/{id}")
+    @GetMapping("/get-appointment/{id}")
     @ResponseBody
     public Appointment getAppointment(@PathVariable int id) {
         return this.appointmentService.getAppointment(id);
@@ -42,7 +42,7 @@ public class AppointmentController {
         this.appointmentService.deleteAppointment(appointment);
     }
 
-    @PutMapping("/updateAppointment")
+    @PutMapping("/update-appointment")
     @ResponseBody
     public Appointment updateAppointment(@RequestBody Appointment appointment) {
         return this.appointmentService.updateAppointment(appointment);

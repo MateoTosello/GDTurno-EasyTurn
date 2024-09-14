@@ -12,11 +12,18 @@ public class Administrator {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idAdministrator;
+    private int id;
 
     @Column(unique = true, nullable = false)
-    private String mailAdministrator;
+    private String mail;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String lastName;
+
 }

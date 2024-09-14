@@ -1,13 +1,18 @@
 package com.backend.easyturn.services;
 
+import com.backend.easyturn.entities.Institution;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.entities.Speciality;
 import com.backend.easyturn.repositories.ProfessionalRepository;
+import com.backend.easyturn.repositories.SpecialityRepository;
+
 import com.backend.easyturn.exceptions.AppException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,18 +23,22 @@ public class ProfessionalService {
     @Autowired
     private ProfessionalRepository professionalRepository;
 
-    public Professional createProfessional(Professional professional, List<Integer> specialitiesIds) {
+    @Autowired
+    private SpecialityRepository specialityRepository;
+
+    public Professional createProfessional(Professional professional, List<Long> specialitiesIds) {
         try{
             Professional prof = this.professionalRepository.findByProfessionalRegistration(professional.getProfessionalRegistration());
             if (prof != null) {
                 throw new AppException("El profesional ya se encuentra registrado", HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            Set<Speciality> specialities = specialityRepository.findAllById(specialitiesIds)
-                    .stream().collect(Collectors.toSet());
+
+            Set<Speciality> specialities = new HashSet<>(specialityRepository.findAllById(specialitiesIds));
             if (specialities.size() != specialitiesIds.size()) {
                 throw new AppException("Una o más especialidades no encontradas", HttpStatus.INTERNAL_SERVER_ERROR);
             }
             professional.setSpecialities(specialities);
+
            return this.professionalRepository.save(professional);
         } catch (Exception e) {
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -47,7 +56,7 @@ public class ProfessionalService {
 
     public List<Professional> getAllProfessionals() {
         try {
-            List<Professional> professionals = this.professionalRepository.findAll();
+            List<Professional> professionals = this.professionalRepository.findAll(Sort.by("professionalName"));
             if (professionals.isEmpty()) {
                 throw new AppException("No existen profesionales", HttpStatus.NOT_FOUND);
             }
@@ -67,9 +76,9 @@ public class ProfessionalService {
         }
     }
 
-    public Professional updateProfessional(Professional professional, int id){
+    public Professional updateProfessional(Professional professional){
         try{
-            Professional prof = this.professionalRepository.findById(id)
+            Professional prof = this.professionalRepository.findById(professional.getIdProfessional())
                     .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
             prof.setProfessionalRegistration(professional.getProfessionalRegistration());
             prof.setProfessionalName(professional.getProfessionalName());
