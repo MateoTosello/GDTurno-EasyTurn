@@ -1,6 +1,8 @@
 package com.backend.easyturn.controllers;
 
 
+import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
+import com.backend.easyturn.entities.DTOs.SpecialityDTO;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.entities.Speciality;
 import com.backend.easyturn.requests.ProfessionalRequest;
@@ -11,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/speciality")
@@ -25,23 +24,26 @@ public class SpecialityController {
 
     @PostMapping("/create-speciality")
     @ResponseBody
-    public ResponseEntity<Speciality> createSpeciality(@RequestBody Speciality speciality) {
+    public ResponseEntity<SpecialityDTO> createSpeciality(@RequestBody Speciality speciality) {
         Speciality specialityCreated = this.specialityService.createSpeciality(speciality);
-        return new ResponseEntity<>(specialityCreated, HttpStatus.CREATED);
+        return new ResponseEntity<>(specialityCreated.toDTO(), HttpStatus.CREATED);
     }
 
     @GetMapping("/get-all-specialities")
     @ResponseBody
-    public ResponseEntity<List<Speciality>> getAll() {
+    public ResponseEntity<List<SpecialityDTO>> getAll() {
         List<Speciality> specialities = this.specialityService.getAllSpecialities();
-        return new ResponseEntity<>(specialities, HttpStatus.OK);
+        List<SpecialityDTO> specialitiesDTO = specialities.stream()
+                .map(Speciality::toDTO)
+                .toList();
+        return new ResponseEntity<>(specialitiesDTO, HttpStatus.OK);
     }
 
     @GetMapping("/get-speciality/{idSpeciality}")
     @ResponseBody
-    public ResponseEntity<Speciality> getSpeciality(@PathVariable Long idSpeciality){
+    public ResponseEntity<SpecialityDTO> getSpeciality(@PathVariable Long idSpeciality){
         Speciality speciality = specialityService.getSpecialityById(idSpeciality);
-        return new ResponseEntity<>(speciality, HttpStatus.OK);
+        return new ResponseEntity<>(speciality.toDTO(), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-speciality/{id}")
@@ -53,9 +55,9 @@ public class SpecialityController {
 
     @PutMapping("/update-speciality")
     @ResponseBody
-    public ResponseEntity<Speciality> updateSpeciality(@RequestBody Speciality speciality) {
+    public ResponseEntity<SpecialityDTO> updateSpeciality(@RequestBody Speciality speciality) {
         Speciality specialityUpdated = this.specialityService.updateSpeciality(speciality);
-        return new ResponseEntity<>(specialityUpdated, HttpStatus.OK);
+        return new ResponseEntity<>(specialityUpdated.toDTO(), HttpStatus.OK);
     }
 
 }
