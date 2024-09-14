@@ -15,14 +15,13 @@ public class ProfessionalService {
     @Autowired
     private ProfessionalRepository professionalRepository;
 
-    public Professional createProfessional(Professional professional) {
+    public Professional createProfessional(Professional professional, List<Integer> specialitiesIds) {
         try{
-
             Professional prof = this.professionalRepository.findByProfessionalRegistration(professional.getProfessionalRegistration());
             if (prof != null) {
                 throw new AppException("El profesional ya se encuentra registrado", HttpStatus.INTERNAL_SERVER_ERROR);
             }
-           return this.professionalRepository.save(professional);
+            return this.professionalRepository.save(professional);
         } catch (Exception e) {
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
