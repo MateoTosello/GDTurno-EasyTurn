@@ -1,5 +1,8 @@
 package com.backend.easyturn.entities;
 
+import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
+import com.backend.easyturn.entities.DTOs.ProfessionalShortDTO;
+import com.backend.easyturn.entities.DTOs.SpecialityDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,4 +31,18 @@ public class Speciality {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "speciality", cascade = CascadeType.ALL)
     private Set<Appointment> appointments;
 
+
+    public SpecialityDTO toDTO() {
+        SpecialityDTO dto = new SpecialityDTO();
+        dto.setId(this.idSpeciality);
+        dto.setSpecialityName(this.specialityName);
+        dto.setSpecialityDescription(this.specialityDescription);
+        dto.setProfessionals(this.professionals.stream()
+                .map(professional -> new ProfessionalShortDTO(
+                        professional.getIdProfessional(),
+                        professional.getProfessionalName()
+                ))
+                .toList());
+        return dto;
+    }
 }

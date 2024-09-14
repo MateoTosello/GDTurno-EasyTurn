@@ -1,5 +1,6 @@
 package com.backend.easyturn.requests;
 
+import com.backend.easyturn.entities.Institution;
 import com.backend.easyturn.entities.Professional;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,5 +12,5 @@ import java.util.List;
 public class ProfessionalRequest {
     private Professional professional;
     private List<Long> specialitiesIds;
-
+    private List<Integer> institutionsIds;
 }
