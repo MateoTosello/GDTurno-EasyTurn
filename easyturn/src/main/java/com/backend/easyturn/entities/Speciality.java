@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -22,7 +23,7 @@ public class Speciality {
     private String specialityDescription;
 
     @ManyToMany(mappedBy = "specialities")
-    private Set<Professional> professionals;
+    private Set<Professional> professionals = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "speciality", cascade = CascadeType.ALL)
     private Set<Appointment> appointments;

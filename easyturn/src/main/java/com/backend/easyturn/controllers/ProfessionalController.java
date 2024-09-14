@@ -1,6 +1,7 @@
 package com.backend.easyturn.controllers;
 
 import com.backend.easyturn.entities.Professional;
+import com.backend.easyturn.requests.ProfessionalRequest;
 import com.backend.easyturn.services.ProfessionalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class ProfessionalController {
 
     @PostMapping("/post")
     @ResponseBody
-    public ResponseEntity<Professional> createProfessional( @RequestBody Professional professional, @RequestParam List<Integer> specialitiesIds) {
-        Professional professionalCreated = this.professionalService.createProfessional(professional,specialitiesIds);
+    public ResponseEntity<Professional> createProfessional(@RequestBody ProfessionalRequest request) {
+        Professional professionalCreated = this.professionalService.createProfessional(request.getProfessional(), request.getSpecialitiesIds());
         return new ResponseEntity<>(professionalCreated, HttpStatus.CREATED);
     }
 
@@ -46,10 +47,10 @@ public class ProfessionalController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/update-professional/{id}")
+    @PutMapping("/update-professional")
     @ResponseBody
-    public ResponseEntity<Professional> updateProfessional(@RequestBody Professional professional, @PathVariable int id) {
-        Professional professionalUpdated = this.professionalService.updateProfessional(professional,id);
+    public ResponseEntity<Professional> updateProfessional(@RequestBody Professional professional) {
+        Professional professionalUpdated = this.professionalService.updateProfessional(professional);
         return new ResponseEntity<>(professionalUpdated, HttpStatus.OK);
     }
 
