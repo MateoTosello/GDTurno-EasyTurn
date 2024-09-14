@@ -39,7 +39,7 @@ public class ProfessionalService {
             }
             professional.setSpecialities(specialities);
 
-            return this.professionalRepository.save(professional);
+           return this.professionalRepository.save(professional);
         } catch (Exception e) {
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -49,7 +49,7 @@ public class ProfessionalService {
         try{
             return this.professionalRepository.findById(id)
                     .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
-        } catch (Exception e) {
+        } catch (Exception e)    {
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
