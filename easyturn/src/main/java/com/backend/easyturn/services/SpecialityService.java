@@ -1,6 +1,5 @@
 package com.backend.easyturn.services;
 
-import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.entities.Speciality;
 import com.backend.easyturn.exceptions.AppException;
 import com.backend.easyturn.repositories.SpecialityRepository;
@@ -73,4 +72,5 @@ public class SpecialityService {
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+}
 
