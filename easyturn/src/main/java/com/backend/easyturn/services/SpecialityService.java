@@ -4,9 +4,7 @@ import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.entities.Speciality;
 import com.backend.easyturn.exceptions.AppException;
 import com.backend.easyturn.repositories.SpecialityRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -18,7 +16,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class SpecialityService {
-
     @Autowired
     private final SpecialityRepository specialityRepository;
 
@@ -76,4 +73,4 @@ public class SpecialityService {
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-}
+
