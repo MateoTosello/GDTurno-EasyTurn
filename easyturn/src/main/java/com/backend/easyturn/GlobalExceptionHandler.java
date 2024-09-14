@@ -19,6 +19,4 @@ public class GlobalExceptionHandler {
     }
 
     //falta manejo de excepciones para el login
-
-
 }

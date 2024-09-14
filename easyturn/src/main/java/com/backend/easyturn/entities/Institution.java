@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -33,5 +34,5 @@ public class Institution {
             joinColumns = @JoinColumn(name = "idInstitution"),
             inverseJoinColumns = @JoinColumn(name = "idProfessional")
     )
-    private Set<Professional> professionals;
+    private Set<Professional> professionals = new HashSet<>();
 }
