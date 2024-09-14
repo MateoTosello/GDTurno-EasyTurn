@@ -1,12 +1,13 @@
 package com.backend.easyturn.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 public class HealthInsurance {
 
@@ -23,50 +24,10 @@ public class HealthInsurance {
     @Column(nullable = false)
     private String healthInsuranceExpirationDate;
 
-    @ManyToMany(mappedBy = "")
-    private Set<Patient> patients;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idPatient")
+    private Patient patients;
 
 //    @ManyToMany(mappedBy = "specialities")
 //    private Set<Professional> professionals;
-
-
-    public int getHealthInsuranceNumber() {
-        return healthInsuranceNumber;
-    }
-
-    public void setHealthInsuranceNumber(int healthInsuranceNumber) {
-        this.healthInsuranceNumber = healthInsuranceNumber;
-    }
-
-    public String getHealthInsurancePlan() {
-        return healthInsurancePlan;
-    }
-
-    public void setHealthInsurancePlan(String healthInsurancePlan) {
-        this.healthInsurancePlan = healthInsurancePlan;
-    }
-
-    public String getHealthInsuranceName() {
-        return healthInsuranceName;
-    }
-
-    public void setHealthInsuranceName(String healthInsuranceName) {
-        this.healthInsuranceName = healthInsuranceName;
-    }
-
-    public String getHealthInsuranceExpirationDate() {
-        return healthInsuranceExpirationDate;
-    }
-
-    public void setHealthInsuranceExpirationDate(String healthInsuranceExpirationDate) {
-        this.healthInsuranceExpirationDate = healthInsuranceExpirationDate;
-    }
-
-    public Set<Patient> getPatients() {
-        return patients;
-    }
-
-    public void setPatients(Set<Patient> patients) {
-        this.patients = patients;
-    }
 }

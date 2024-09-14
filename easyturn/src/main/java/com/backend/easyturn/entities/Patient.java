@@ -43,13 +43,7 @@ public class Patient {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<Appointment> appointments;
 
-    @ManyToMany()
-    @JoinTable(
-            name = "patient_healthInsurance",
-            joinColumns = @JoinColumn(name = "idPatient"),
-            inverseJoinColumns = @JoinColumn(name = "numberHealthInsurance")
-
-    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<HealthInsurance> healthInsurances;
 
 }
