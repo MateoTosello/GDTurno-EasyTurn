@@ -1,6 +1,7 @@
 package com.backend.easyturn.entities;
 
 import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
+import com.backend.easyturn.entities.DTOs.ProfessionalShortDTO;
 import com.backend.easyturn.entities.DTOs.SpecialityDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -36,8 +37,11 @@ public class Speciality {
         dto.setId(this.idSpeciality);
         dto.setSpecialityName(this.specialityName);
         dto.setSpecialityDescription(this.specialityDescription);
-        dto.setProfessionalNames(this.professionals.stream()
-                .map(Professional::getProfessionalName)
+        dto.setProfessionals(this.professionals.stream()
+                .map(professional -> new ProfessionalShortDTO(
+                        professional.getIdProfessional(),
+                        professional.getProfessionalName()
+                ))
                 .toList());
         return dto;
     }

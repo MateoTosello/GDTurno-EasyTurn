@@ -12,9 +12,7 @@ public class ProfessionalDTO {
     private String professionalName;
     private String professionalRegistration;
     private String mail;
-    private String password;
-    private List<String> specialityNames;
-    private List<String> institutionNames;
-
+    private List<SpecialityShortDTO> specialities;
+    private List<InstitutionShortDTO> institutions;
 
 }

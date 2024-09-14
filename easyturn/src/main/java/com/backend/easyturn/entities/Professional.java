@@ -1,6 +1,8 @@
 package com.backend.easyturn.entities;
 
+import com.backend.easyturn.entities.DTOs.InstitutionShortDTO;
 import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
+import com.backend.easyturn.entities.DTOs.SpecialityShortDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,12 +59,15 @@ public class Professional {
         dto.setProfessionalName(this.professionalName);
         dto.setProfessionalRegistration(this.professionalRegistration);
         dto.setMail(this.mail);
-        dto.setPassword(this.password);
-        dto.setSpecialityNames(this.specialities.stream()
-                .map(Speciality::getSpecialityName)
+        dto.setSpecialities(this.specialities.stream()
+                .map(speciality -> new SpecialityShortDTO(
+                        speciality.getIdSpeciality(),
+                        speciality.getSpecialityName()))
                 .toList());
-        dto.setInstitutionNames(this.institutions.stream()
-                .map(Institution::getInstitutionName)
+        dto.setInstitutions(this.institutions.stream()
+                .map(institution -> new InstitutionShortDTO(
+                        institution.getIdInstitution(),
+                        institution.getInstitutionName()))
                 .toList());
         return dto;
     }

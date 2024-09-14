@@ -11,5 +11,5 @@ public class SpecialityDTO {
     private Long id;
     private String specialityName;
     private String specialityDescription;
-    private List<String> professionalNames;
+    private List<ProfessionalShortDTO> professionals;
 }

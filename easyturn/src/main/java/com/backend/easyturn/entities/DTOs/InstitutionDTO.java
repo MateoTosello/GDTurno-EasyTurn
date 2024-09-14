@@ -12,5 +12,5 @@ public class InstitutionDTO {
     private String institutionName;
     private String institutionAddress;
     private String institutionAddressNumber;
-    private List<String> professionalNames;
+    private List<ProfessionalShortDTO> professionals;
 }
