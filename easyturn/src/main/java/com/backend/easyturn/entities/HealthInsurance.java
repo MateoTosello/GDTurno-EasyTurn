@@ -13,6 +13,10 @@ public class HealthInsurance {
 
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idHealthInsurance;
+
+    @Column(nullable = false)
     private int healthInsuranceNumber;
 
     @Column(nullable = false)
@@ -30,4 +34,5 @@ public class HealthInsurance {
 
 //    @ManyToMany(mappedBy = "specialities")
 //    private Set<Professional> professionals;
+
 }

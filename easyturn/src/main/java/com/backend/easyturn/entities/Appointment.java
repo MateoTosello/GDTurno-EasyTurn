@@ -37,9 +37,6 @@ public class Appointment {
     @Column(name = "patient_email", insertable = false, updatable = false)
     private String patientEmail;
 
-    @Column(name = "professional_registration", insertable = false, updatable = false)
-    private String professionalRegistration;
-
     @ManyToOne
     @JoinColumn(name = "idPatient", referencedColumnName = "idPatient", nullable = false)
     private Patient patient;
