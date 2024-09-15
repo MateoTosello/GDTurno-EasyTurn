@@ -59,5 +59,18 @@ public class ProfessionalController {
         return new ResponseEntity<>(professionalUpdated.toDTO(), HttpStatus.OK);
     }
 
+    @PostMapping("add-specialities/{id}")
+    @ResponseBody
+    public ResponseEntity<ProfessionalDTO> addSpeciality(@PathVariable int id, @RequestBody List<Long> specialitiesIds){
+        Professional professionalUpdated = this.professionalService.addSpecialities(id,specialitiesIds);
+        return new ResponseEntity<>(professionalUpdated.toDTO(), HttpStatus.OK);
+    }
+
+    @PostMapping("add-institutions/{id}")
+    @ResponseBody
+    public ResponseEntity<ProfessionalDTO> addInstitution(@PathVariable int id, @RequestBody List<Integer> institutionsIds){
+        Professional professionalUpdated = this.professionalService.addInstitutions(id,institutionsIds);
+        return new ResponseEntity<>(professionalUpdated.toDTO(), HttpStatus.OK);
+    }
 
 }
