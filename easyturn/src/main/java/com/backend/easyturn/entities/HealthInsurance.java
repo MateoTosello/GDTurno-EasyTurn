@@ -28,11 +28,8 @@ public class HealthInsurance {
     @Column(nullable = false)
     private String healthInsuranceExpirationDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idPatient")
-    private Patient patients;
+    @OneToMany(mappedBy = "healthInsurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Patient> patients;
 
-//    @ManyToMany(mappedBy = "specialities")
-//    private Set<Professional> professionals;
 
 }

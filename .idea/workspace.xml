@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10d45111-39a0-4c3e-a89b-73d7f46a2156" name="Changes" comment="" />
+    <list default="true" id="10d45111-39a0-4c3e-a89b-73d7f46a2156" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/easyturn/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/entities/DTOs/HealthInsuranceShortDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/controllers/PatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/controllers/PatientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/entities/HealthInsurance.java" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/entities/HealthInsurance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/entities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/entities/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/repositories/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/repositories/PatientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/services/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/src/main/java/com/backend/easyturn/services/PatientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/controllers/InstitutionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/controllers/InstitutionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/controllers/ProfessionalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/controllers/ProfessionalController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/controllers/SpecialityController.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/controllers/SpecialityController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/HealthInsurance.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/HealthInsurance.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/Institution.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/Institution.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/Patient.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/Patient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/Professional.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/Professional.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/Speciality.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/entities/Speciality.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/requests/ProfessionalRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/requests/ProfessionalRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/services/ProfessionalService.class" beforeDir="false" afterPath="$PROJECT_DIR$/easyturn/target/classes/com/backend/easyturn/services/ProfessionalService.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,8 +39,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -65,10 +91,16 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.EasyturnApplication.executor": "Run",
+    "git-widget-placeholder": "mateo",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/tosel/Programacion/GDTurno-EasyTurn/GDTurno-EasyTurn",
+    "last_opened_file_path": "C:/Users/tosel/Programacion/crud",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,6 +108,11 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "editor.preferences.fonts.default",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RunManager">
@@ -107,6 +144,7 @@
       <option name="presentableId" value="Default" />
       <updated>1726337086382</updated>
       <workItem from="1726337087339" duration="1240000" />
+      <workItem from="1726427324639" duration="6588000" />
     </task>
     <servers />
   </component>

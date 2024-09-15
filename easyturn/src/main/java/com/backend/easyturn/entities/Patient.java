@@ -1,9 +1,14 @@
 package com.backend.easyturn.entities;
 
+import com.backend.easyturn.entities.DTOs.HealthInsuranceShortDTO;
+import com.backend.easyturn.entities.DTOs.PatientDTO;
+import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatusCode;
 
+import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -23,7 +28,7 @@ public class Patient {
     private String lastName;
 
     @Column(nullable = false, unique=true)
-    private int IDCardNumber;
+    private String IDCardNumber;
 
     @Column(nullable = false, unique=true)
     private String mail;
@@ -32,7 +37,7 @@ public class Patient {
     private String password;
 
     @Column(nullable = false)
-    private int birthDate;
+    private Date birthDate;
 
     @Column(nullable = false)
     private String gender;
@@ -44,7 +49,23 @@ public class Patient {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<Appointment> appointments;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)
-    private Set<HealthInsurance> healthInsurances;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idHealthInsurance", nullable = false)
+    private HealthInsurance healthInsurance;
 
+    public PatientDTO toDTO() {
+        PatientDTO dto = new PatientDTO();
+        dto.setIdPateint(this.idPatient);
+        dto.setFirstName(this.firstName);
+        dto.setLastName(this.lastName);
+        dto.setMail(this.mail);
+        if (this.healthInsurance != null) {
+            HealthInsuranceShortDTO healthInsuranceDTO = new HealthInsuranceShortDTO(
+                    this.healthInsurance.getIdHealthInsurance(),
+                    this.healthInsurance.getHealthInsuranceName()
+            );
+            dto.setHealthInsurance(healthInsuranceDTO);
+        }
+        return dto;
+    }
 }
