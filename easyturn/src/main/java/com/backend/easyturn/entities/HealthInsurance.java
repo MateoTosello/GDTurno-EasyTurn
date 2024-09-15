@@ -6,9 +6,9 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
+@Entity
 public class HealthInsurance {
 
     @Id
@@ -28,7 +28,8 @@ public class HealthInsurance {
     @Column(nullable = false)
     private String healthInsuranceExpirationDate;
 
-    @ManyToMany(mappedBy = "")
+    @OneToMany(mappedBy = "healthInsurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Patient> patients;
+
 
 }
