@@ -1,9 +1,6 @@
 package com.backend.easyturn.entities;
 
-import com.backend.easyturn.entities.DTOs.InstitutionDTO;
-import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
-import com.backend.easyturn.entities.DTOs.ProfessionalShortDTO;
-import com.backend.easyturn.entities.DTOs.SpecialityDTO;
+import com.backend.easyturn.entities.DTOs.*;
 import jakarta.persistence.*;
 
 import lombok.Getter;
@@ -46,8 +43,7 @@ public class Institution {
                 .map(professional -> new ProfessionalShortDTO(
                         professional.getIdProfessional(),
                         professional.getProfessionalName()
-                        )
-                )
+                ))
                 .toList());
         return dto;
     }
