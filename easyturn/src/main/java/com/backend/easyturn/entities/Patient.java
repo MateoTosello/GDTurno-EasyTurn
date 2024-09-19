@@ -46,10 +46,10 @@ public class Patient {
     private String phoneNumber;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)  //OJO EL CASCADE
     private Set<Appointment> appointments;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)   //No va el cascade. Cualquier operacion sobre el paciente (incluido delete) se propaga al healthInsurance
     @JoinColumn(name = "idHealthInsurance", nullable = false)
     private HealthInsurance healthInsurance;
 
@@ -63,7 +63,8 @@ public class Patient {
         if (this.healthInsurance != null) {
             HealthInsuranceShortDTO healthInsuranceDTO = new HealthInsuranceShortDTO(
                     this.healthInsurance.getIdHealthInsurance(),
-                    this.healthInsurance.getHealthInsuranceName()
+                    this.healthInsurance.getHealthInsuranceName(),
+                    this.healthInsurance.getHealthInsurancePlan()
             );
             dto.setHealthInsurance(healthInsuranceDTO);
         }

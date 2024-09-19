@@ -57,15 +57,20 @@ public class PatientService {
         }
     }
 
-    public Patient updatePatient(Patient patient){
+    public Patient updatePatient(Patient patient,  int idHealthInsurance){
         try {
             Patient p = this.patientRepository.findById(patient.getIdPatient())
                     .orElseThrow(() -> new AppException("Paciente no encontrado", HttpStatus.NOT_FOUND));
-            p.setHealthInsurance(patient.getHealthInsurance());
+            p.setFirstName(patient.getFirstName());
+            p.setLastName(patient.getLastName());
             p.setMail(patient.getMail());
             p.setIdCardNumber(patient.getIdCardNumber());
             p.setPhoneNumber(patient.getPhoneNumber());
-            // Ver si se necesita la acualizacion de otros campos
+
+            HealthInsurance healthInsurance = this.healthInsuranceRepository.findById(idHealthInsurance)
+                    .orElseThrow(() -> new AppException("La Obra Social no existe", HttpStatus.NOT_FOUND));
+            p.setHealthInsurance(healthInsurance);
+
             return patientRepository.save(p);
         } catch (Exception e){
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

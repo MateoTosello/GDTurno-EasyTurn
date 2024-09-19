@@ -1,5 +1,6 @@
 package com.backend.easyturn.entities;
 
+import com.backend.easyturn.entities.DTOs.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,16 +21,35 @@ public class HealthInsurance {
     private int healthInsuranceNumber;
 
     @Column(nullable = false)
-    private String healthInsurancePlan;
+    private String healthInsuranceName;
 
     @Column(nullable = false)
-    private String healthInsuranceName;
+    private String healthInsurancePlan;
 
     @Column(nullable = false)
     private String healthInsuranceExpirationDate;
 
-    @OneToMany(mappedBy = "healthInsurance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "healthInsurance", fetch = FetchType.LAZY) // NO VA CASCADE
     private Set<Patient> patients;
 
 
+    public HealthInsuranceDTO toDTO() {
+        HealthInsuranceDTO dto = new HealthInsuranceDTO();
+        dto.setId(this.idHealthInsurance);
+        dto.setHealthInsuranceNumber(this.healthInsuranceNumber);
+        dto.setHealthInsuranceName(this.healthInsuranceName);
+        dto.setHealthInsurancePlan(this.healthInsurancePlan);
+        dto.setHealthInsuranceExpirationDate(this.healthInsuranceExpirationDate);
+
+        if(!this.patients.isEmpty()) {
+            dto.setPatients(this.patients.stream()
+                    .map(patient -> new PatientShortDTO(
+                            patient.getIdPatient(),
+                            patient.getFirstName(),
+                            patient.getLastName()))
+                    .toList());
+        }
+
+        return dto;
+    }
 }

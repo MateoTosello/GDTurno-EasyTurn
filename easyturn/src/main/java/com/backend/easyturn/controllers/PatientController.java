@@ -43,17 +43,17 @@ public class PatientController {
         return new ResponseEntity<>(patientDTOs, HttpStatus.OK);
     }
 
-    @PutMapping("/update-profesional")
+    @PutMapping("/update-patient")
     @ResponseBody
-    public ResponseEntity<PatientDTO> updatePatient(@RequestBody Patient patient){ //No tendria que incluir a la obra social? (Por ejemplo si se cambio de OS)
-        Patient patientUpdated = this.patientService.updatePatient(patient);
+    public ResponseEntity<PatientDTO> updatePatient(@RequestBody PatientRequest request){ //No tendria que incluir a la obra social? (Por ejemplo si se cambio de OS)
+        Patient patientUpdated = this.patientService.updatePatient(request.getPatient(), request.getIdHealthInsurance());
         return new ResponseEntity<>(patientUpdated.toDTO(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete-profesional/{id}")
+    @DeleteMapping("/delete-patient/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deletePatient(@PathVariable int idPatient){
-        this.patientService.deletePatient(idPatient);
+    public ResponseEntity<Void> deletePatient(@PathVariable int id){
+        this.patientService.deletePatient(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

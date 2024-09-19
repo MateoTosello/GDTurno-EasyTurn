@@ -73,4 +73,4 @@ public class ProfessionalController {
         return new ResponseEntity<>(professionalUpdated.toDTO(), HttpStatus.OK);
     }
 
-}
+} 
