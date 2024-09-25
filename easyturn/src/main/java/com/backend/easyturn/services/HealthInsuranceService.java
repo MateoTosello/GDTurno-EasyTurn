@@ -33,6 +33,7 @@ public class HealthInsuranceService {
             if (healthIns != null) {
                 throw new AppException("La Obra Social ya se encuentra registrada", HttpStatus.INTERNAL_SERVER_ERROR);
             }
+            healthInsurance.setActive(true); // ALTA LOGICA POR DEFECTO
             return this.healthInsuranceRepository.save(healthInsurance);
 
         } catch (Exception e) {
@@ -68,7 +69,10 @@ public class HealthInsuranceService {
 
             if (!healthInsurance.getPatients().isEmpty())
                 throw new AppException("No se puede eliminar la Obra Social porque tiene pacientes asociados", HttpStatus.CONFLICT);
-            this.healthInsuranceRepository.delete(healthInsurance);
+
+            // UTILIZAMOS BAJA LOGICA PARA MANTENER REGISTROS ANTERIORES
+            healthInsurance.setActive(false);
+            this.healthInsuranceRepository.save(healthInsurance);
 
         } catch (Exception e){
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

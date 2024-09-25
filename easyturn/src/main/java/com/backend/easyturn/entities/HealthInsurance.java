@@ -29,9 +29,11 @@ public class HealthInsurance {
     @Column(nullable = false)
     private String healthInsuranceExpirationDate;
 
+    @Column(nullable = false)
+    private Boolean active;
+
     @OneToMany(mappedBy = "healthInsurance", fetch = FetchType.LAZY) // NO VA CASCADE
     private Set<Patient> patients;
-
 
     public HealthInsuranceDTO toDTO() {
         HealthInsuranceDTO dto = new HealthInsuranceDTO();
