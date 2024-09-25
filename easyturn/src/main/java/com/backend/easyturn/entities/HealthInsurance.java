@@ -28,6 +28,9 @@ public class HealthInsurance {
     @Column(nullable = false)
     private String healthInsuranceExpirationDate;
 
+    @Column(nullable = false)
+    private Boolean active;
+
     @ManyToMany(mappedBy = "")
     private Set<Patient> patients;
 

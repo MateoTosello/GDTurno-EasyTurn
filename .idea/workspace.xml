@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bce2f0a4-266d-4a88-b95b-40f38aa7573e" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2lyXaVGCjFqgYvrXph9wN1GPOjz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.EasyturnApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;mauricio__dev&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Bochatay Mauricio/IdeaProjects/Easy_turn_FullStack/GDTurno-EasyTurn&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.ApplicationConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.backend.easyturn.entities" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="EasyturnApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="easyturn" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.backend.easyturn.EasyturnApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bce2f0a4-266d-4a88-b95b-40f38aa7573e" name="Changes" comment="" />
+      <created>1726153354021</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726153354021</updated>
+      <workItem from="1726153355191" duration="563000" />
+      <workItem from="1726166401129" duration="8156000" />
+      <workItem from="1726175194698" duration="146000" />
+      <workItem from="1726175354110" duration="120000" />
+      <workItem from="1726175657853" duration="410000" />
+      <workItem from="1726235567171" duration="121000" />
+      <workItem from="1726235938628" duration="88000" />
+      <workItem from="1726236042497" duration="94000" />
+      <workItem from="1726236152741" duration="808000" />
+      <workItem from="1726237013394" duration="310000" />
+      <workItem from="1726237347596" duration="146000" />
+      <workItem from="1726237510069" duration="445000" />
+      <workItem from="1726260668807" duration="396000" />
+      <workItem from="1726261269693" duration="88000" />
+      <workItem from="1726263495932" duration="2778000" />
+      <workItem from="1726266609236" duration="1419000" />
+      <workItem from="1726268052112" duration="69000" />
+      <workItem from="1726268182155" duration="110000" />
+      <workItem from="1726271089501" duration="112000" />
+      <workItem from="1726271941719" duration="118000" />
+      <workItem from="1726272096299" duration="321000" />
+      <workItem from="1726273182695" duration="733000" />
+      <workItem from="1726320763818" duration="1590000" />
+      <workItem from="1726323073153" duration="1270000" />
+      <workItem from="1726324405520" duration="3287000" />
+      <workItem from="1726339471725" duration="3071000" />
+      <workItem from="1726342617197" duration="1417000" />
+      <workItem from="1726356425344" duration="1000" />
+      <workItem from="1726568890167" duration="3000" />
+      <workItem from="1726924464750" duration="67000" />
+      <workItem from="1727274975848" duration="558000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
