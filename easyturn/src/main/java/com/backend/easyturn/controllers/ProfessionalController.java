@@ -21,6 +21,7 @@ public class ProfessionalController {
     @Autowired
     private ProfessionalService professionalService;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/post")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> createProfessional(@RequestBody ProfessionalRequest request) {
@@ -28,6 +29,7 @@ public class ProfessionalController {
         return new ResponseEntity<>(professionalCreated.toDTO(), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-professional/{id}")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> getProfessional(@PathVariable int id) {
@@ -35,6 +37,7 @@ public class ProfessionalController {
         return new ResponseEntity<>(professional.toDTO(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-all-professionals")
     @ResponseBody
     public ResponseEntity<List<ProfessionalDTO>> getAll() {
@@ -45,6 +48,7 @@ public class ProfessionalController {
         return new ResponseEntity<>(professionalsDTO, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-professional/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteProfessional(@PathVariable int id) {
@@ -52,6 +56,7 @@ public class ProfessionalController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/update-professional")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> updateProfessional(@RequestBody Professional professional) {
@@ -59,6 +64,7 @@ public class ProfessionalController {
         return new ResponseEntity<>(professionalUpdated.toDTO(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("add-specialities/{id}")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> addSpeciality(@PathVariable int id, @RequestBody List<Long> specialitiesIds){
@@ -66,6 +72,7 @@ public class ProfessionalController {
         return new ResponseEntity<>(professionalUpdated.toDTO(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("add-institutions/{id}")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> addInstitution(@PathVariable int id, @RequestBody List<Integer> institutionsIds){

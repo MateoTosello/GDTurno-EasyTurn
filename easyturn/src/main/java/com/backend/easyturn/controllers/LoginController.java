@@ -13,6 +13,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/")
     @ResponseBody
     public ResponseEntity<String> login(@RequestBody UserLoginDTO userLoginDTO) {

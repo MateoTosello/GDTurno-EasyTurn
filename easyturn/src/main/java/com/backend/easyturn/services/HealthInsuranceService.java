@@ -41,15 +41,15 @@ public class HealthInsuranceService {
         }
     }
 
-    public List<HealthInsurance> getAllHealthInsurances() {
+    public List<HealthInsurance> getAllHealthInsurances() throws AppException {
         try {
             List<HealthInsurance> healthInsurances = this.healthInsuranceRepository.findAll();
             if (healthInsurances.isEmpty()) {
                 throw new AppException("No existen Obras Sociales", HttpStatus.NOT_FOUND);
             }
             return healthInsurances;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(),e.getStatus());
         }
     }
 
