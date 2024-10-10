@@ -61,8 +61,8 @@ public class LoginService {
                 throw new AppException("Usuario no encontrado", HttpStatus.CONFLICT);
             }
         }
-        catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.CONFLICT);
+        catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
         return token;
     }

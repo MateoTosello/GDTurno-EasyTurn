@@ -23,8 +23,8 @@ public class InstitutionService {
             }
             return this.institutionRepository.save(institution);
         }
-        catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        catch (AppException e){
+            throw new AppException(e.getMessage(), e.getStatus());
         }
 
     }
@@ -34,8 +34,8 @@ public class InstitutionService {
             return this.institutionRepository.findById(id)
                     .orElseThrow(() -> new AppException("Institution no encontrada", HttpStatus.NOT_FOUND));
         }
-        catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        catch (AppException e){
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -47,8 +47,8 @@ public class InstitutionService {
            }
            return institutions;
         }
-        catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        catch (AppException e){
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -58,8 +58,8 @@ public class InstitutionService {
                     .orElseThrow(() -> new AppException("Institution no encontrada", HttpStatus.NOT_FOUND));
             this.institutionRepository.delete(institution);
         }
-        catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        catch (AppException e){
+            throw new AppException(e.getMessage(),e.getStatus());
         }
     }
 
@@ -72,8 +72,8 @@ public class InstitutionService {
             ins.setInstitutionAddressNumber(institution.getInstitutionAddressNumber());
             return this.institutionRepository.save(ins);
         }
-        catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        catch (AppException e){
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 

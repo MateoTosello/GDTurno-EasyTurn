@@ -36,8 +36,8 @@ public class HealthInsuranceService {
             healthInsurance.setActive(true); // ALTA LOGICA POR DEFECTO
             return this.healthInsuranceRepository.save(healthInsurance);
 
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -57,8 +57,8 @@ public class HealthInsuranceService {
         try {
             return this.healthInsuranceRepository.findById(id)
                     .orElseThrow(() -> new AppException("Obra Social no encontrada", HttpStatus.NOT_FOUND));
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -74,8 +74,8 @@ public class HealthInsuranceService {
             healthInsurance.setActive(false);
             this.healthInsuranceRepository.save(healthInsurance);
 
-        } catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e){
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -90,8 +90,8 @@ public class HealthInsuranceService {
 
             return this.healthInsuranceRepository.save(healthIns);
 
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 

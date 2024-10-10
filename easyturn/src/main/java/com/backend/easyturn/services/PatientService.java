@@ -31,8 +31,8 @@ public class PatientService {
             patient.setHealthInsurance(healthInsurance);
 
             return patientRepository.save(patient);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -40,8 +40,8 @@ public class PatientService {
         try {
             return this.patientRepository.findById(idPatient)
                     .orElseThrow(() -> new AppException("El paciente no existe", HttpStatus.NOT_FOUND));
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(),e.getStatus());
         }
     }
 
@@ -52,8 +52,8 @@ public class PatientService {
                 throw new AppException("No hay pacientes cargados", HttpStatus.NOT_FOUND);
             }
             return patients;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -72,8 +72,8 @@ public class PatientService {
             p.setHealthInsurance(healthInsurance);
 
             return patientRepository.save(p);
-        } catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e){
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -82,8 +82,8 @@ public class PatientService {
             Patient p = this.patientRepository.findById(idPatient)
                     .orElseThrow(() -> new AppException("El paciente no existe", HttpStatus.NOT_FOUND));
             this.patientRepository.delete(p);
-        } catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e){
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 

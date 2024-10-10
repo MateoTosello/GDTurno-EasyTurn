@@ -63,8 +63,8 @@ public class ProfessionalService {
             professional.setInstitutions(institutions);
 
             return this.professionalRepository.save(professional);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -72,8 +72,8 @@ public class ProfessionalService {
         try {
             return this.professionalRepository.findById(id)
                     .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -84,8 +84,8 @@ public class ProfessionalService {
                 throw new AppException("No existen profesionales", HttpStatus.NOT_FOUND);
             }
             return professionals;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -94,8 +94,8 @@ public class ProfessionalService {
             Professional professional = this.professionalRepository.findById(id)
                     .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
             this.professionalRepository.delete(professional);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -106,8 +106,8 @@ public class ProfessionalService {
             prof.setProfessionalRegistration(professional.getProfessionalRegistration());
             prof.setProfessionalName(professional.getProfessionalName());
             return this.professionalRepository.save(prof);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
 
     }
@@ -128,8 +128,8 @@ public class ProfessionalService {
             prof.getSpecialities().addAll(specialities);
 
             return this.professionalRepository.save(prof);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -149,8 +149,8 @@ public class ProfessionalService {
             prof.getInstitutions().addAll(institutions);
 
             return this.professionalRepository.save(prof);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 }

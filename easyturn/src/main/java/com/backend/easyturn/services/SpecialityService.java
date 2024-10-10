@@ -25,8 +25,8 @@ public class SpecialityService {
                 throw  new AppException("La especialidad ya se encuentra registrada",HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return specialityRepository.save(speciality);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(),e.getStatus());
         }
     }
 
@@ -34,8 +34,8 @@ public class SpecialityService {
         try{
             return this.specialityRepository.findById(idSpeciality)
                     .orElseThrow(()-> new AppException("Especialidad no encontrada",HttpStatus.NOT_FOUND));
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(),e.getStatus());
         }
     }
 
@@ -46,8 +46,8 @@ public class SpecialityService {
                 throw new AppException("No existen especialidades",HttpStatus.NOT_FOUND);
             }
             return specialities;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(),e.getStatus());
         }
     }
 
@@ -56,8 +56,8 @@ public class SpecialityService {
             Speciality speciality  = this.specialityRepository.findById(idSpeciality)
                     .orElseThrow(()-> new AppException("Especialidad no encontrada", HttpStatus.NOT_FOUND));
             this.specialityRepository.delete(speciality);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -68,8 +68,8 @@ public class SpecialityService {
             sp.setSpecialityName(speciality.getSpecialityName());
             sp.setSpecialityDescription(speciality.getSpecialityDescription());
             return this.specialityRepository.save(sp);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 }

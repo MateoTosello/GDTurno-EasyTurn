@@ -27,8 +27,8 @@ public class AdministratorService {
             Administrator adminCreated = administratorRepository.save(administrator);
             AdministratorDTO adminDTO = new AdministratorDTO(adminCreated.getId(), adminCreated.getMail(), adminCreated.getName(), adminCreated.getLastName());
             return adminDTO;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -39,8 +39,8 @@ public class AdministratorService {
                 throw new AppException("El administrador no existe!", HttpStatus.NOT_FOUND);
             }
             this.administratorRepository.deleteById(idAdministrator);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -50,8 +50,8 @@ public class AdministratorService {
                     .orElseThrow(() -> new AppException("El administrador no existe!", HttpStatus.NOT_FOUND));
             AdministratorDTO administratorDTO = new AdministratorDTO(administrator.getId(), administrator.getMail(), administrator.getName(), administrator.getLastName());
             return administratorDTO;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -67,8 +67,8 @@ public class AdministratorService {
                 administratorDTOS.add(adminDTO);
             }
             return administratorDTOS;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
   
@@ -85,8 +85,8 @@ public class AdministratorService {
             Administrator administratorModified = this.administratorRepository.save(admin);
             AdministratorDTO administratorDTO = new AdministratorDTO(administratorModified.getId(), administratorModified.getMail(), administratorModified.getName(), administratorModified.getLastName());
             return administratorDTO;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 }
