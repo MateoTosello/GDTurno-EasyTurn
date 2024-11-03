@@ -3,6 +3,8 @@ package com.backend.easyturn.services;
 import com.backend.easyturn.entities.HealthInsurance;
 import com.backend.easyturn.entities.Patient;
 import com.backend.easyturn.exceptions.AppException;
+import com.backend.easyturn.exceptions.IfClassExistsException;
+import com.backend.easyturn.exceptions.NotFoundException;
 import com.backend.easyturn.repositories.HealthInsuranceRepository;
 import com.backend.easyturn.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,10 @@ public class PatientService {
         try{
             Patient p = this.patientRepository.findByMail(patient.getMail());
             if(p != null) {
-                throw new AppException("El paciente ya existe", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new IfClassExistsException("El paciente ya existe");
             }
             HealthInsurance healthInsurance = this.healthInsuranceRepository.findById(idHealthInsurance)
-                    .orElseThrow(() -> new AppException("La OS no existe", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("La OS no existe"));
             patient.setHealthInsurance(healthInsurance);
 
             return patientRepository.save(patient);
@@ -39,7 +41,7 @@ public class PatientService {
     public Patient getPatientById(int idPatient){
         try {
             return this.patientRepository.findById(idPatient)
-                    .orElseThrow(() -> new AppException("El paciente no existe", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("El paciente no existe"));
         } catch (AppException e) {
             throw new AppException(e.getMessage(),e.getStatus());
         }
@@ -49,7 +51,7 @@ public class PatientService {
         try {
             List<Patient> patients = this.patientRepository.findAll();
             if (patients.isEmpty()) {
-                throw new AppException("No hay pacientes cargados", HttpStatus.NOT_FOUND);
+                throw new NotFoundException("No hay pacientes cargados");
             }
             return patients;
         } catch (AppException e) {
@@ -60,7 +62,7 @@ public class PatientService {
     public Patient updatePatient(Patient patient,  int idHealthInsurance){
         try {
             Patient p = this.patientRepository.findById(patient.getIdPatient())
-                    .orElseThrow(() -> new AppException("Paciente no encontrado", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Paciente no encontrado"));
             p.setFirstName(patient.getFirstName());
             p.setLastName(patient.getLastName());
             p.setMail(patient.getMail());
@@ -68,7 +70,7 @@ public class PatientService {
             p.setPhoneNumber(patient.getPhoneNumber());
 
             HealthInsurance healthInsurance = this.healthInsuranceRepository.findById(idHealthInsurance)
-                    .orElseThrow(() -> new AppException("La Obra Social no existe", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("La Obra Social no existe"));
             p.setHealthInsurance(healthInsurance);
 
             return patientRepository.save(p);
@@ -80,7 +82,7 @@ public class PatientService {
     public void deletePatient(int idPatient){
         try{
             Patient p = this.patientRepository.findById(idPatient)
-                    .orElseThrow(() -> new AppException("El paciente no existe", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("El paciente no existe"));
             this.patientRepository.delete(p);
         } catch (AppException e){
             throw new AppException(e.getMessage(), e.getStatus());

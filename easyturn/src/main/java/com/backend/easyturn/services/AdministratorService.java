@@ -3,6 +3,8 @@ package com.backend.easyturn.services;
 import com.backend.easyturn.entities.Administrator;
 import com.backend.easyturn.entities.DTOs.AdministratorDTO;
 import com.backend.easyturn.exceptions.AppException;
+import com.backend.easyturn.exceptions.IfClassExistsException;
+import com.backend.easyturn.exceptions.NotFoundException;
 import com.backend.easyturn.repositories.AdministratorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ public class AdministratorService {
         try{
             Administrator adminFound = this.administratorRepository.findByMail(administrator.getMail());
             if(adminFound != null){
-                throw new AppException("Este mail ya existe!", HttpStatus.CONFLICT);
+                throw new IfClassExistsException("Este mail ya existe!");
             }
             Administrator adminCreated = administratorRepository.save(administrator);
             AdministratorDTO adminDTO = new AdministratorDTO(adminCreated.getId(), adminCreated.getMail(), adminCreated.getName(), adminCreated.getLastName());
@@ -36,7 +38,7 @@ public class AdministratorService {
     public void deleteAdministrator(int idAdministrator) {
         try {
             if(!this.administratorRepository.existsById(idAdministrator)){
-                throw new AppException("El administrador no existe!", HttpStatus.NOT_FOUND);
+                throw new NotFoundException("El administrador no existe!");
             }
             this.administratorRepository.deleteById(idAdministrator);
         } catch (AppException e) {
@@ -47,7 +49,7 @@ public class AdministratorService {
     public AdministratorDTO getAdministrator(int idAdministrator) {
         try{
             Administrator administrator = this.administratorRepository.findById(idAdministrator)
-                    .orElseThrow(() -> new AppException("El administrador no existe!", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("El administrador no existe!"));
             AdministratorDTO administratorDTO = new AdministratorDTO(administrator.getId(), administrator.getMail(), administrator.getName(), administrator.getLastName());
             return administratorDTO;
         } catch (AppException e) {
@@ -60,7 +62,7 @@ public class AdministratorService {
             List<AdministratorDTO> administratorDTOS = new ArrayList<>();
             List<Administrator> administrators = this.administratorRepository.findAll();
             if(administrators.isEmpty()){
-                throw new AppException("No hay administradores cargados!", HttpStatus.NOT_FOUND);
+                throw new NotFoundException("No hay administradores cargados!");
             }
             for(Administrator admin:administrators){
                 AdministratorDTO adminDTO = new AdministratorDTO(admin.getId(), admin.getMail(), admin.getName(), admin.getLastName());
@@ -76,10 +78,10 @@ public class AdministratorService {
         try{
             Administrator adminFound = this.administratorRepository.findByMail(administrator.getMail());
             if(adminFound != null){
-                throw new AppException("Este mail ya existe!", HttpStatus.CONFLICT);
+                throw new IfClassExistsException("Este mail ya existe!");
             }
             Administrator admin = this.administratorRepository.findById(administrator.getId())
-                    .orElseThrow(() -> new AppException("El administrador no existe!", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("El administrador no existe!"));
             admin.setMail(administrator.getMail());
             admin.setPassword(administrator.getPassword());
             Administrator administratorModified = this.administratorRepository.save(admin);

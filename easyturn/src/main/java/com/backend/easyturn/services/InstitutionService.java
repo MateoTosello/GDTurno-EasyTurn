@@ -2,6 +2,8 @@ package com.backend.easyturn.services;
 
 import com.backend.easyturn.entities.Institution;
 import com.backend.easyturn.exceptions.AppException;
+import com.backend.easyturn.exceptions.IfClassExistsException;
+import com.backend.easyturn.exceptions.NotFoundException;
 import com.backend.easyturn.repositories.InstitutionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,20 +21,19 @@ public class InstitutionService {
         try{
             Institution ins =  this.institutionRepository.findByInstitutionName(institution.getInstitutionName());
             if (ins != null) {
-                throw new AppException("Institución existente", HttpStatus.CONFLICT);
+                throw new IfClassExistsException("Institución existente");
             }
             return this.institutionRepository.save(institution);
         }
         catch (AppException e){
             throw new AppException(e.getMessage(), e.getStatus());
         }
-
     }
 
     public Institution getInstitution(int id) {
         try{
             return this.institutionRepository.findById(id)
-                    .orElseThrow(() -> new AppException("Institution no encontrada", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Institucion no encontrada"));
         }
         catch (AppException e){
             throw new AppException(e.getMessage(), e.getStatus());
@@ -43,7 +44,7 @@ public class InstitutionService {
         try{
            List<Institution> institutions = this.institutionRepository.findAll();
            if(institutions.isEmpty()){
-                throw new AppException("No hay instituciones", HttpStatus.NOT_FOUND);
+                throw new NotFoundException("No hay instituciones");
            }
            return institutions;
         }
@@ -55,7 +56,7 @@ public class InstitutionService {
     public void deleteInstitution(int id) {
         try{
             Institution institution = this.institutionRepository.findById(id)
-                    .orElseThrow(() -> new AppException("Institution no encontrada", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Institution no encontrada"));
             this.institutionRepository.delete(institution);
         }
         catch (AppException e){
@@ -66,7 +67,7 @@ public class InstitutionService {
     public Institution updateInstitution(Institution institution) {
         try{
             Institution ins = this.institutionRepository.findById(institution.getIdInstitution())
-                    .orElseThrow(() -> new AppException("Institution no encontrada", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Institution no encontrada"));
             ins.setInstitutionName(institution.getInstitutionName());
             ins.setInstitutionAddress(institution.getInstitutionAddress());
             ins.setInstitutionAddressNumber(institution.getInstitutionAddressNumber());
