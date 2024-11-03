@@ -22,6 +22,7 @@ public class SpecialityController {
     @Autowired
     private SpecialityService specialityService;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/create-speciality")
     @ResponseBody
     public ResponseEntity<SpecialityDTO> createSpeciality(@RequestBody Speciality speciality) {
@@ -29,6 +30,7 @@ public class SpecialityController {
         return new ResponseEntity<>(specialityCreated.toDTO(), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-all-specialities")
     @ResponseBody
     public ResponseEntity<List<SpecialityDTO>> getAll() {
@@ -39,6 +41,7 @@ public class SpecialityController {
         return new ResponseEntity<>(specialitiesDTO, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-speciality/{idSpeciality}")
     @ResponseBody
     public ResponseEntity<SpecialityDTO> getSpeciality(@PathVariable Long idSpeciality){
@@ -46,6 +49,7 @@ public class SpecialityController {
         return new ResponseEntity<>(speciality.toDTO(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-speciality/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteProfessional(@PathVariable long id) {
@@ -53,6 +57,7 @@ public class SpecialityController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/update-speciality")
     @ResponseBody
     public ResponseEntity<SpecialityDTO> updateSpeciality(@RequestBody Speciality speciality) {

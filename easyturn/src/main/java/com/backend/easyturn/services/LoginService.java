@@ -5,6 +5,7 @@ import com.backend.easyturn.entities.DTOs.UserLoginDTO;
 import com.backend.easyturn.entities.Patient;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.exceptions.AppException;
+import com.backend.easyturn.exceptions.NotFoundException;
 import com.backend.easyturn.repositories.AdministratorRepository;
 import com.backend.easyturn.repositories.PatientRepository;
 import com.backend.easyturn.repositories.ProfessionalRepository;
@@ -58,11 +59,11 @@ public class LoginService {
                 }
             }
             if(count == 0) {
-                throw new AppException("Usuario no encontrado", HttpStatus.CONFLICT);
+                throw new NotFoundException("Usuario no encontrado");
             }
         }
-        catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.CONFLICT);
+        catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
         return token;
     }
