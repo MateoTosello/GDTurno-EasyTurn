@@ -23,7 +23,7 @@ public class HealthInsuranceController {
     @Autowired
     HealthInsuranceService healthInsuranceService;
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/get-all-healthinsurance")
+    @GetMapping(value = "/")
     public ResponseEntity<List<HealthInsuranceDTO>> getAll() throws AppException {
         List<HealthInsurance> healthInsurances = this.healthInsuranceService.getAllHealthInsurances();
         List<HealthInsuranceDTO> healthInsurancesDTO = healthInsurances.stream()
@@ -32,13 +32,13 @@ public class HealthInsuranceController {
         return new ResponseEntity<>(healthInsurancesDTO, HttpStatus.OK);
     }
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/get-healthinsurance/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<HealthInsuranceDTO> getHealthInsurance(@PathVariable int id) {
         HealthInsurance healthInsurance = this.healthInsuranceService.getHealthInsurance(id);
         return new ResponseEntity<>(healthInsurance.toDTO(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/post")
+    @PostMapping(value = "/")
     @ResponseBody
     public ResponseEntity<HealthInsurance> createHealthInsurance(@RequestBody HealthInsurance healthInsurance) {
         HealthInsurance healthInsuranceCreated = this.healthInsuranceService.createHealthInsurance(healthInsurance);

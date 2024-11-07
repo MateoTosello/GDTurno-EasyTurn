@@ -63,7 +63,7 @@ public class Patient {
         if (this.healthInsurance != null) {
             HealthInsuranceShortDTO healthInsuranceDTO = new HealthInsuranceShortDTO(
                     this.healthInsurance.getIdHealthInsurance(),
-                    this.healthInsurance.getHealthInsuranceName(),
+                    this.healthInsurance.getName(),
                     this.healthInsurance.getHealthInsurancePlan()
             );
             dto.setHealthInsurance(healthInsuranceDTO);

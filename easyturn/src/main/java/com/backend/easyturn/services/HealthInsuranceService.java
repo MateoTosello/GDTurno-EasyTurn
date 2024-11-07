@@ -87,7 +87,7 @@ public class HealthInsuranceService {
             HealthInsurance healthIns = healthInsuranceRepository.findById(healthInsurance.getIdHealthInsurance())
                     .orElseThrow(()-> new NotFoundException("Obra Social no encontrada"));
             healthIns.setHealthInsuranceNumber(healthInsurance.getHealthInsuranceNumber());
-            healthIns.setHealthInsuranceName(healthInsurance.getHealthInsuranceName());
+            healthIns.setName(healthInsurance.getName());
             healthIns.setHealthInsurancePlan(healthInsurance.getHealthInsurancePlan());
             healthIns.setHealthInsuranceExpirationDate(healthInsurance.getHealthInsuranceExpirationDate());
 

@@ -68,7 +68,7 @@ public class Professional {
         dto.setInstitutions(this.institutions.stream()
                 .map(institution -> new InstitutionShortDTO(
                         institution.getIdInstitution(),
-                        institution.getInstitutionName()))
+                        institution.getName()))
                 .toList());
         return dto;
     }
