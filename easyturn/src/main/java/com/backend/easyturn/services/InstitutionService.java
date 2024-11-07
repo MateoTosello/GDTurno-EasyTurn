@@ -19,7 +19,7 @@ public class InstitutionService {
 
     public Institution createInstitution(Institution institution) {
         try{
-            Institution ins =  this.institutionRepository.findByInstitutionName(institution.getInstitutionName());
+            Institution ins =  this.institutionRepository.findByName(institution.getName());
             if (ins != null) {
                 throw new IfClassExistsException("Institución existente");
             }
@@ -68,7 +68,7 @@ public class InstitutionService {
         try{
             Institution ins = this.institutionRepository.findById(institution.getIdInstitution())
                     .orElseThrow(() -> new NotFoundException("Institution no encontrada"));
-            ins.setInstitutionName(institution.getInstitutionName());
+            ins.setName(institution.getName());
             ins.setInstitutionAddress(institution.getInstitutionAddress());
             ins.setInstitutionAddressNumber(institution.getInstitutionAddressNumber());
             return this.institutionRepository.save(ins);

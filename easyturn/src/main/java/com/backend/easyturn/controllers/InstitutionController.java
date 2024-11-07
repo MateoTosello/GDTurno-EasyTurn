@@ -22,7 +22,7 @@ public class InstitutionController {
     private InstitutionService institutionService;
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/post")
+    @PostMapping("/")
     @ResponseBody
     public ResponseEntity<InstitutionDTO> createInstitution(@RequestBody Institution institution) {
         Institution institutionCreated = this.institutionService.createInstitution(institution);
@@ -30,7 +30,7 @@ public class InstitutionController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/get-institution/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<InstitutionDTO> getInstitution(@PathVariable int id){
         Institution institution = this.institutionService.getInstitution(id);
@@ -38,7 +38,7 @@ public class InstitutionController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/get-all-institutions")
+    @GetMapping("/")
     @ResponseBody
     public ResponseEntity<List<InstitutionDTO>> getAll(){
         List<Institution> institutions = this.institutionService.getAllInstitutions();
@@ -49,7 +49,7 @@ public class InstitutionController {
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping("/delete-institution/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<String> deleteInstitution(@PathVariable int id) {
         this.institutionService.deleteInstitution(id);
@@ -57,7 +57,7 @@ public class InstitutionController {
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping("/update-institution")
+    @PutMapping("/")
     @ResponseBody
     public ResponseEntity<InstitutionDTO> updateInstitution(@RequestBody Institution institution) {
         Institution institutionUpdated = this.institutionService.updateInstitution(institution);
