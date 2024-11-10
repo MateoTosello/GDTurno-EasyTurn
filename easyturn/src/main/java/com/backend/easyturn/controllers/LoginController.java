@@ -18,7 +18,8 @@ public class LoginController {
     @PostMapping("/")
     @ResponseBody
     public ResponseEntity<UserLoguedDTO> login(@RequestBody UserLoginDTO userLoginDTO) {
-        return new ResponseEntity<>(this.loginService.login(userLoginDTO), HttpStatus.OK);
+        UserLoguedDTO user = this.loginService.login(userLoginDTO);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }
