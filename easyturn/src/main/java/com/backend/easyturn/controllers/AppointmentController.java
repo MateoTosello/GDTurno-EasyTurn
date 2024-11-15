@@ -1,8 +1,13 @@
 package com.backend.easyturn.controllers;
 
 import com.backend.easyturn.entities.Appointment;
+import com.backend.easyturn.entities.DTOs.AppointmentDTO;
+import com.backend.easyturn.entities.Patient;
+import com.backend.easyturn.requests.AppointmentRequest;
 import com.backend.easyturn.services.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,40 +18,54 @@ public class AppointmentController {
 
     @Autowired
     AppointmentService appointmentService;
+
     @CrossOrigin(origins = "*")
     @GetMapping("/get-appointments")
+
     @ResponseBody
-    public List<Appointment> getAppointments() {
-        return this.appointmentService.getAllAppointments();
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
+        List<Appointment> appointments = this.appointmentService.getAllAppointments();
+        List<AppointmentDTO> appointmentDTOs = appointments.stream()
+                .map(Appointment::toDTO)
+                .toList();
+        return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
     }
     @CrossOrigin(origins = "*")
     @GetMapping("/get-appointment/{id}")
     @ResponseBody
-    public Appointment getAppointment(@PathVariable int id) {
-        return this.appointmentService.getAppointment(id);
-    }
-    @CrossOrigin(origins = "*")
-    @PostMapping("/appointment")
-    @ResponseBody
-    public Long newAppointment(@RequestBody Appointment appointment) {
-        return this.appointmentService.createAppointment(appointment);
-    }
-    @CrossOrigin(origins = "*")
-    @DeleteMapping("/appointment/{id}")
-    public void deleteAppointmentById(@PathVariable int id) {
-        this.appointmentService.deleteAppointmentById(id);
+    public ResponseEntity<AppointmentDTO> getAppointmentById(@PathVariable int id) {
+        Appointment appointment = this.appointmentService.getAppointmentById(id);
+        return new ResponseEntity<>(appointment.toDTO(), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping("/appointment")
-    public void deleteAppointment(@RequestBody Appointment appointment) {
-        this.appointmentService.deleteAppointment(appointment);
+    @PostMapping("/appointment")
+    @ResponseBody
+    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentRequest request) {
+        Appointment appointmentCreated = this.appointmentService.createAppointment(
+                request.getAppointment(),
+                request.getIdPatient(),
+                request.getIdProfessional(),
+                request.getIdSpeciality()
+        );
+        return new ResponseEntity<>(appointmentCreated.toDTO(), HttpStatus.CREATED);
     }
+
 
     @CrossOrigin(origins = "*")
     @PutMapping("/update-appointment")
     @ResponseBody
-    public Appointment updateAppointment(@RequestBody Appointment appointment) {
-        return this.appointmentService.updateAppointment(appointment);
+    public ResponseEntity<AppointmentDTO> updateAppointment(@RequestBody Appointment appointment) {
+        Appointment appointmentUpdated = this.appointmentService.updateAppointment(appointment);
+        return new ResponseEntity<>(appointmentUpdated.toDTO(), HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/appointment/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteAppointment(@PathVariable int id) {
+        this.appointmentService.deleteAppointment(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

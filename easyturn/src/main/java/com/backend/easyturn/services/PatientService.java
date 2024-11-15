@@ -1,5 +1,6 @@
 package com.backend.easyturn.services;
 
+import com.backend.easyturn.entities.Appointment;
 import com.backend.easyturn.entities.HealthInsurance;
 import com.backend.easyturn.entities.Patient;
 import com.backend.easyturn.exceptions.AppException;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PatientService {
@@ -88,6 +90,17 @@ public class PatientService {
             throw new AppException(e.getMessage(), e.getStatus());
         }
     }
+
+    public Set<Appointment> getAppointmentsByPatient(int idPatient) {
+        try {
+            Patient patient = this.patientRepository.findById(idPatient)
+                    .orElseThrow(() -> new AppException("El paciente no existe", HttpStatus.NOT_FOUND));
+            return patient.getAppointments();
+        } catch (Exception e) {
+            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
 }
