@@ -2,7 +2,9 @@ package com.backend.easyturn.controllers;
 
 
 import com.backend.easyturn.entities.DTOs.InstitutionDTO;
+import com.backend.easyturn.entities.DTOs.SpecialityDTO;
 import com.backend.easyturn.entities.Institution;
+import com.backend.easyturn.entities.Speciality;
 import com.backend.easyturn.services.InstitutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +30,7 @@ public class InstitutionController {
 
     @GetMapping("/get-institution/{id}")
     @ResponseBody
-    public ResponseEntity<InstitutionDTO> getInstitution(@PathVariable int id) {
+    public ResponseEntity<InstitutionDTO> getInstitution(@PathVariable int id){
         Institution institution = this.institutionService.getInstitution(id);
         return new ResponseEntity<>(institution.toDTO(), HttpStatus.OK);
     }

@@ -34,7 +34,7 @@ public class Professional {
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "professional", cascade = CascadeType.ALL)
-    private Set<Appointment> appointments;
+    private Set<Appointment> appointments = new HashSet<>();
 
     @ManyToMany()
     @JoinTable(
@@ -71,7 +71,5 @@ public class Professional {
                 .toList());
         return dto;
     }
-
-
 
 }

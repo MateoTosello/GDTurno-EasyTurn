@@ -7,3 +7,4 @@ public interface SpecialityRepository extends JpaRepository<Speciality, Long> {
     Speciality findBySpecialityName(String specialityName);
 
 }
+
