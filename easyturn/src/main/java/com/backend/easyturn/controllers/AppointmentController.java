@@ -19,8 +19,9 @@ public class AppointmentController {
     @Autowired
     AppointmentService appointmentService;
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/get-appointments")
 
-    @GetMapping("/get-all-appointments")
     @ResponseBody
     public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
         List<Appointment> appointments = this.appointmentService.getAllAppointments();
@@ -29,7 +30,7 @@ public class AppointmentController {
                 .toList();
         return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-appointment/{id}")
     @ResponseBody
     public ResponseEntity<AppointmentDTO> getAppointmentById(@PathVariable int id) {
@@ -37,7 +38,8 @@ public class AppointmentController {
         return new ResponseEntity<>(appointment.toDTO(), HttpStatus.OK);
     }
 
-    @PostMapping("/post")
+    @CrossOrigin(origins = "*")
+    @PostMapping("/appointment")
     @ResponseBody
     public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentRequest request) {
         Appointment appointmentCreated = this.appointmentService.createAppointment(
@@ -50,6 +52,7 @@ public class AppointmentController {
     }
 
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/update-appointment")
     @ResponseBody
     public ResponseEntity<AppointmentDTO> updateAppointment(@RequestBody Appointment appointment) {
@@ -57,7 +60,8 @@ public class AppointmentController {
         return new ResponseEntity<>(appointmentUpdated.toDTO(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete-appointment/{id}")
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/appointment/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteAppointment(@PathVariable int id) {
         this.appointmentService.deleteAppointment(id);

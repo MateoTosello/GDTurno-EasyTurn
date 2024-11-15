@@ -22,6 +22,7 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/post")
     @ResponseBody
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientRequest request){
@@ -29,6 +30,7 @@ public class PatientController {
         return new ResponseEntity<>(patientCreated.toDTO(), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-patient/{id}")
     @ResponseBody
     public ResponseEntity<PatientDTO> getPatientById(@PathVariable int id){
@@ -36,6 +38,7 @@ public class PatientController {
         return  new ResponseEntity<>(patient.toDTO(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-all-patients")
     @ResponseBody
     public ResponseEntity<List<PatientDTO>> getAll(){
@@ -46,6 +49,7 @@ public class PatientController {
         return new ResponseEntity<>(patientDTOs, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/update-patient")
     @ResponseBody
     public ResponseEntity<PatientDTO> updatePatient(@RequestBody PatientRequest request){
@@ -53,6 +57,7 @@ public class PatientController {
         return new ResponseEntity<>(patientUpdated.toDTO(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-patient/{id}")
     @ResponseBody
     public ResponseEntity<Void> deletePatient(@PathVariable int id){
@@ -60,6 +65,7 @@ public class PatientController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/appointments/{id}")
     @ResponseBody
     public ResponseEntity<List<AppointmentDTO>> getAppointmentsByPatient(@PathVariable int id) {

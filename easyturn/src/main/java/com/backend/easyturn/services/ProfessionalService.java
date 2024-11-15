@@ -4,6 +4,9 @@ import com.backend.easyturn.entities.Appointment;
 import com.backend.easyturn.entities.Institution;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.entities.Speciality;
+import com.backend.easyturn.exceptions.IfClassExistsException;
+import com.backend.easyturn.exceptions.NotFoundException;
+import com.backend.easyturn.exceptions.RequestIncompleteException;
 import com.backend.easyturn.repositories.InstitutionRepository;
 import com.backend.easyturn.repositories.ProfessionalRepository;
 import com.backend.easyturn.repositories.SpecialityRepository;
@@ -33,22 +36,22 @@ public class ProfessionalService {
         try {
             // Validar que el profesional no sea nulo
             if (professional == null) {
-                throw new AppException("El profesional no puede ser nulo", HttpStatus.BAD_REQUEST);
+                throw new NotFoundException("El profesional no puede ser nulo");
             }
 
             Professional prof = this.professionalRepository.findByProfessionalRegistration(professional.getProfessionalRegistration());
             if (prof != null) {
-                throw new AppException("El profesional ya se encuentra registrado", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new IfClassExistsException("El profesional ya se encuentra registrado");
             }
 
             // Validar que specialitiesIds no esté vacío
             if (specialitiesIds == null || specialitiesIds.isEmpty()) {
-                throw new AppException("Debe proporcionar al menos una especialidad", HttpStatus.BAD_REQUEST);
+                throw new RequestIncompleteException("Debe proporcionar al menos una especialidad");
             }
 
             // Validar que institutionsIds no esté vacío
             if (institutionsIds == null || institutionsIds.isEmpty()) {
-                throw new AppException("Debe proporcionar al menos una institución", HttpStatus.BAD_REQUEST);
+                throw new RequestIncompleteException("Debe proporcionar al menos una institución");
             }
 
             Set<Speciality> specialities = new HashSet<>(specialityRepository.findAllById(specialitiesIds));
@@ -59,22 +62,22 @@ public class ProfessionalService {
 
             Set<Institution> institutions = new HashSet<>(institutionRepository.findAllById(institutionsIds));
             if (institutions.size() != institutionsIds.size()) {
-                throw new AppException("Una o más instituciones no encontradas", HttpStatus.NOT_FOUND);
+                throw new NotFoundException("Una o más instituciones no encontradas");
             }
             professional.setInstitutions(institutions);
 
             return this.professionalRepository.save(professional);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
     public Professional getProfessional(int id) {
         try {
             return this.professionalRepository.findById(id)
-                    .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    .orElseThrow(() -> new NotFoundException("Profesional no encontrado"));
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -82,33 +85,33 @@ public class ProfessionalService {
         try {
             List<Professional> professionals = this.professionalRepository.findAll();
             if (professionals.isEmpty()) {
-                throw new AppException("No existen profesionales", HttpStatus.NOT_FOUND);
+                throw new NotFoundException("No existen profesionales");
             }
             return professionals;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
     public void deleteProfessional(int id) {
         try {
             Professional professional = this.professionalRepository.findById(id)
-                    .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Profesional no encontrado"));
             this.professionalRepository.delete(professional);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
     public Professional updateProfessional(Professional professional) {
         try {
             Professional prof = this.professionalRepository.findById(professional.getIdProfessional())
-                    .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Profesional no encontrado"));
             prof.setProfessionalRegistration(professional.getProfessionalRegistration());
             prof.setProfessionalName(professional.getProfessionalName());
             return this.professionalRepository.save(prof);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
 
     }
@@ -116,42 +119,42 @@ public class ProfessionalService {
     public Professional addSpecialities(int id, List<Long> specialitiesIds) {
         try {
             if (specialitiesIds.isEmpty()) {
-                throw new AppException("Lista de especialidades vacía", HttpStatus.BAD_REQUEST);
+                throw new RequestIncompleteException("Lista de especialidades vacía");
             }
 
             Professional prof = this.professionalRepository.findById(id)
-                    .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Profesional no encontrado"));
 
             Set<Speciality> specialities = new HashSet<>(specialityRepository.findAllById(specialitiesIds));
             if (specialities.size() != specialitiesIds.size()) {
-                throw new AppException("Una o mas especialidades no encontradas", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new NotFoundException("Una o mas especialidades no encontradas");
             }
             prof.getSpecialities().addAll(specialities);
 
             return this.professionalRepository.save(prof);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
     public Professional addInstitutions(int id, List<Integer> institutionsIds) {
         try {
             if (institutionsIds.isEmpty()) {
-                throw new AppException("Lista de instituciones vacía", HttpStatus.BAD_REQUEST);
+                throw new RequestIncompleteException("Lista de instituciones vacía");
             }
 
             Professional prof = this.professionalRepository.findById(id)
-                    .orElseThrow(() -> new AppException("Profesional no encontrado", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Profesional no encontrado"));
 
             Set<Institution> institutions = new HashSet<>(institutionRepository.findAllById(institutionsIds));
             if (institutions.size() != institutionsIds.size()) {
-                throw new AppException("Una o mas instituciones no encontradas", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new NotFoundException("Una o mas instituciones no encontradas");
             }
             prof.getInstitutions().addAll(institutions);
 
             return this.professionalRepository.save(prof);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 

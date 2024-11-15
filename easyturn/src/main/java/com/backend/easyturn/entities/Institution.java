@@ -21,7 +21,7 @@ public class Institution {
     private int idInstitution;
 
     @Column(name = "institution_name")
-    private String institutionName;
+    private String name;
 
     @Column(name = "institution_address")
     private String institutionAddress;
@@ -36,7 +36,7 @@ public class Institution {
     public InstitutionDTO toDTO() {
         InstitutionDTO dto = new InstitutionDTO();
         dto.setId(this.idInstitution);
-        dto.setInstitutionName(this.institutionName);
+        dto.setName(this.name);
         dto.setInstitutionAddress(this.institutionAddress);
         dto.setInstitutionAddressNumber(this.institutionAddressNumber);
         dto.setProfessionals(this.professionals.stream()

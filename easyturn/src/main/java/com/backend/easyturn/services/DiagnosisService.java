@@ -6,6 +6,9 @@ import com.backend.easyturn.entities.Diagnosis;
 import com.backend.easyturn.entities.Institution;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.exceptions.AppException;
+import com.backend.easyturn.exceptions.IfClassExistsException;
+import com.backend.easyturn.exceptions.NotFoundException;
+import com.backend.easyturn.exceptions.RequestIncompleteException;
 import com.backend.easyturn.repositories.AppointmentRepository;
 import com.backend.easyturn.repositories.DiagnosisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +30,16 @@ public class DiagnosisService {
         try{
             //Verificar que el turno ingresado existe
             Appointment appointment =  this.appointmentRepository.findById(appointmentId)
-                    .orElseThrow(() -> new AppException("No se encontró el turno", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("No se encontró el turno"));
 
             //Verificar que el turno ya no tiene ingresado un diagnostico
             if (diagnosisRepository.existsByAppointmentIdAppointment(appointmentId)){
-                throw new AppException("El turno ingresado ya posee un registro de atención.",HttpStatus.CONFLICT);
+                throw new IfClassExistsException("El turno ingresado ya posee un registro de atención.");
             }
 
             //Verificar que la descripcion no sea nula o vacía
             if (diagnosis.getDiagnosisDescription() == null || diagnosis.getDiagnosisDescription().trim().isEmpty()){
-                throw new AppException("La descripción de la atención médica no puede estar vacía",HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RequestIncompleteException("La descripción de la atención médica no puede estar vacía");
             }
 
             diagnosis.setAppointment(appointment);
@@ -44,8 +47,8 @@ public class DiagnosisService {
 
             return this.diagnosisRepository.save(diagnosis);
         }
-        catch (Exception e){
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        catch (AppException e){
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -53,9 +56,9 @@ public class DiagnosisService {
     public Diagnosis getDiagnosticById(int diagnosisId) {
         try {
             return diagnosisRepository.findById(diagnosisId)
-                    .orElseThrow(() -> new AppException("No se encontró el diagnóstico", HttpStatus.NOT_FOUND));
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    .orElseThrow(() -> new NotFoundException("No se encontró el diagnóstico"));
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -64,18 +67,18 @@ public class DiagnosisService {
         try {
             List<Diagnosis> diagnosisList = diagnosisRepository.findAll();
             if (diagnosisList.isEmpty()) {
-                throw new AppException("No hay diagnósticos registrados", HttpStatus.NOT_FOUND);
+                throw new NotFoundException("No hay diagnósticos registrados");
             }
             return diagnosisList;
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
     public void deleteDiagnosis(int id) {
         try {
             Diagnosis diagnosis = this.diagnosisRepository.findById(id)
-                    .orElseThrow(() -> new AppException("Diagnóstico no encontrado", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Diagnóstico no encontrado"));
 
             // Obtener el turno asociado
             Appointment appointment = diagnosis.getAppointment();
@@ -91,20 +94,20 @@ public class DiagnosisService {
 
             // Eliminar el diagnóstico
             this.diagnosisRepository.delete(diagnosis);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
     public Diagnosis updateDiagnosis(Diagnosis diagnosisUpdate) {
         try {
             Diagnosis diagnosis = this.diagnosisRepository.findById(diagnosisUpdate.getIdDiagnosis())
-                    .orElseThrow(() -> new AppException("Diagnóstico no encontrado", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Diagnóstico no encontrado"));
 
             diagnosis.setDiagnosisDescription(diagnosisUpdate.getDiagnosisDescription());
             return this.diagnosisRepository.save(diagnosis);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 }

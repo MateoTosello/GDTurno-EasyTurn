@@ -5,6 +5,8 @@ import com.backend.easyturn.entities.Patient;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.entities.Speciality;
 import com.backend.easyturn.exceptions.AppException;
+import com.backend.easyturn.exceptions.IfClassExistsException;
+import com.backend.easyturn.exceptions.NotFoundException;
 import com.backend.easyturn.repositories.AppointmentRepository;
 import com.backend.easyturn.repositories.PatientRepository;
 import com.backend.easyturn.repositories.ProfessionalRepository;
@@ -36,15 +38,15 @@ public class AppointmentService {
         try {
             // Verificar que el paciente existe
             Patient patient = this.patientRepository.findById(idPatient)
-                    .orElseThrow(() -> new AppException("El paciente no existe", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("El paciente no existe"));
 
             // Verificar que el profesional existe
             Professional professional = this.professionalRepository.findById(idProfessional)
-                    .orElseThrow(() -> new AppException("El profesional no existe", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("El profesional no existe"));
 
             // Verificar que la especialidad existe
             Speciality speciality = this.specialityRepository.findById(idSpeciality)
-                    .orElseThrow(() -> new AppException("La especialidad no existe", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("La especialidad no existe"));
             // Verificar que la especialidad es una de
 
             if (!professional.getSpecialities().contains(speciality)) {
@@ -57,9 +59,8 @@ public class AppointmentService {
             // Verificar si existe algún turno en ese rango de tiempo
             if(appointmentRepository.existsByProfessionalAndAppointmentDateTimeBetween(
                     professional, startTime, endTime)) {
-                throw new AppException(
-                        "Ya existe un turno para ese profesional en ese horario o muy cercano",
-                        HttpStatus.CONFLICT
+                throw new IfClassExistsException(
+                        "Ya existe un turno para ese profesional en ese horario o muy cercano"
                 );
             }
 
@@ -68,8 +69,8 @@ public class AppointmentService {
             appointment.setSpeciality(speciality);
 
             return appointmentRepository.save(appointment);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
 
     }
@@ -78,11 +79,11 @@ public class AppointmentService {
     try {
         List<Appointment> appointments = this.appointmentRepository.findAll();
         if (appointments.isEmpty()) {
-            throw new AppException("No hay turnos cargados", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("No hay turnos cargados");
         }
         return appointments;
-    } catch (Exception e) {
-        throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    } catch (AppException e) {
+        throw new AppException(e.getMessage(), e.getStatus());
     }
 }
 
@@ -90,19 +91,19 @@ public class AppointmentService {
     public Appointment getAppointmentById(int idAppointment) {
     try {
         return this.appointmentRepository.findById(idAppointment)
-                .orElseThrow(() -> new AppException("El turno no existe", HttpStatus.NOT_FOUND));
-    } catch (Exception e) {
-        throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                .orElseThrow(() -> new NotFoundException("El turno no existe"));
+    } catch (AppException e) {
+        throw new AppException(e.getMessage(), e.getStatus());
     }
 }
 
     public void deleteAppointment(int idAppointment) {
         try {
             Appointment a = this.appointmentRepository.findById(idAppointment)
-                    .orElseThrow(() -> new AppException("El turno no existe", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("El turno no existe"));
             this.appointmentRepository.delete(a);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 
@@ -110,7 +111,7 @@ public class AppointmentService {
     public Appointment updateAppointment(Appointment appointment) {
         try {
             Appointment existingAppointment = this.appointmentRepository.findById(appointment.getIdAppointment())
-                    .orElseThrow(() -> new AppException("Turno no encontrado", HttpStatus.NOT_FOUND));
+                    .orElseThrow(() -> new NotFoundException("Turno no encontrado"));
 
             // Actualizar solo los campos que están presentes en el appointment recibido
 
@@ -123,9 +124,8 @@ public class AppointmentService {
                     // verificar si hay algun turno en dicho rango para el profesional del turno
                     if (appointmentRepository.existsByProfessionalAndAppointmentDateTimeBetween(
                             existingAppointment.getProfessional(), startTime, endTime)) {
-                        throw new AppException(
-                                "Ya existe un turno para ese profesional en ese horario o muy cercano",
-                                HttpStatus.CONFLICT
+                        throw new IfClassExistsException(
+                                "Ya existe un turno para ese profesional en ese horario o muy cercano"
                         );
                     }
                     existingAppointment.setAppointmentDateTime(appointment.getAppointmentDateTime());
@@ -140,8 +140,8 @@ public class AppointmentService {
                 existingAppointment.setPatientValoration(appointment.getPatientValoration());
             }
             return appointmentRepository.save(existingAppointment);
-        } catch (Exception e) {
-            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppException e) {
+            throw new AppException(e.getMessage(), e.getStatus());
         }
     }
 }
