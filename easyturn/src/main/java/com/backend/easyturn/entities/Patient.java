@@ -2,6 +2,7 @@ package com.backend.easyturn.entities;
 
 import com.backend.easyturn.entities.DTOs.HealthInsuranceShortDTO;
 import com.backend.easyturn.entities.DTOs.PatientDTO;
+import com.backend.easyturn.entities.DTOs.PatientShortDTO;
 import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import org.springframework.http.HttpStatusCode;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -45,9 +47,8 @@ public class Patient {
     @Column(nullable = false)
     private String phoneNumber;
 
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)  //OJO EL CASCADE
-    private Set<Appointment> appointments;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient", cascade = CascadeType.ALL)  //Las operaciones CRUD se propagan a los turnos asociados. Al modificar un paciente, se modifican los turnos. Al eliminarlo, tambien se eliminan los turnos
+    private Set<Appointment> appointments = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)   //No va el cascade. Cualquier operacion sobre el paciente (incluido delete) se propaga al healthInsurance
     @JoinColumn(name = "idHealthInsurance", nullable = false)
@@ -69,5 +70,12 @@ public class Patient {
             dto.setHealthInsurance(healthInsuranceDTO);
         }
         return dto;
+    }
+    public PatientShortDTO toShortDTO() {
+        return new PatientShortDTO(
+                this.idPatient,
+                this.firstName,
+                this.lastName
+        );
     }
 }
