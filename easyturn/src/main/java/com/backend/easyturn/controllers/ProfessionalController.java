@@ -2,6 +2,8 @@ package com.backend.easyturn.controllers;
 
 import com.backend.easyturn.entities.Appointment;
 import com.backend.easyturn.entities.DTOs.AppointmentDTO;
+import com.backend.easyturn.entities.DTOs.AppointmentSearchDateDTO;
+import com.backend.easyturn.entities.DTOs.AppointmentShortDTO;
 import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.requests.ProfessionalRequest;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -86,4 +89,16 @@ public class ProfessionalController {
         return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
     }
 
+    @GetMapping("/appointments/date")
+    @ResponseBody
+    public ResponseEntity<List<AppointmentShortDTO>> getAppointmentsByDate(@RequestBody AppointmentSearchDateDTO filterDateDTO) {
+
+        Set<Appointment> appointments = this.professionalService.listAppointmentsByDate(filterDateDTO.getIdProfessional(),filterDateDTO.getDate());
+
+        List<AppointmentShortDTO> appointmentDTOs = appointments.stream()
+                .map(Appointment::toShortDTO)
+                .toList();
+
+        return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
+    }
 } 

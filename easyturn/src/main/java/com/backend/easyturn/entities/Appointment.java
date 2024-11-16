@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -107,4 +105,17 @@ public class Appointment {
         }
         return dto;
     }
+
+    public AppointmentShortDTO toShortDTO() {
+        // Convertimos el paciente a PatientShortDTO
+        PatientShortDTO patientShortDTO = this.patient.toShortDTO();
+
+        // Creamos y retornamos el nuevo AppointmentShortDTO
+        return new AppointmentShortDTO(
+                this.idAppointment,
+                this.appointmentDateTime,
+                patientShortDTO
+        );
+    }
+
 }
