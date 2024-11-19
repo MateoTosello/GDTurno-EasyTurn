@@ -60,4 +60,11 @@ public class SpecialityController {
         return new ResponseEntity<>(specialityUpdated.toDTO(), HttpStatus.OK);
     }
 
+    @GetMapping("/speciality-names")
+    @ResponseBody
+    public ResponseEntity<List<String>> getAllSpecialityNames() {
+        List<String> specialityNames = this.specialityService.getAllSpecialityNames();
+        return new ResponseEntity<>(specialityNames, HttpStatus.OK);
+    }
+
 }
