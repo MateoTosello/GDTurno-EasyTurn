@@ -66,15 +66,32 @@ public class SpecialityService {
     public Speciality updateSpeciality(Speciality speciality) {
         try {
             Speciality sp = this.specialityRepository.findById(speciality.getIdSpeciality())
+                    .orElseThrow(() -> new AppException("Especialidad no encontrada", HttpStatus.NOT_FOUND));
 
-                    .orElseThrow(() -> new NotFoundException("Especialidad no encontrada"));
-            sp.setSpecialityName(speciality.getSpecialityName());
-            sp.setSpecialityDescription(speciality.getSpecialityDescription());
+            if (speciality.getSpecialityName() != null) {
+                sp.setSpecialityName(speciality.getSpecialityName());
+            }
+            if (speciality.getSpecialityDescription() != null) {
+                sp.setSpecialityDescription(speciality.getSpecialityDescription());
+            }
             return this.specialityRepository.save(sp);
-        } catch (AppException e) {
-            throw new AppException(e.getMessage(), e.getStatus());
+        } catch (Exception e) {
+            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    public List<String> getAllSpecialityNames() {
+        try {
+            List<Speciality> specialities = this.specialityRepository.findAll(Sort.by("specialityName"));
+            if (specialities.isEmpty()) {
+                throw new AppException("No existen especialidades", HttpStatus.NOT_FOUND);
+            }
+            return specialities.stream()
+                    .map(Speciality::getSpecialityName)
+                    .toList();
+        } catch (Exception e) {
+            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
