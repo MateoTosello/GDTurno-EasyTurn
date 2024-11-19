@@ -21,12 +21,14 @@ public class DiagnosisController {
     @Autowired
     private DiagnosisService diagnosisService;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/post")
     public ResponseEntity<DiagnosisDTO> createDiagnosis(@RequestBody DiagnosisRequest request) {
         Diagnosis diagnosisCreated = this.diagnosisService.createDiagnosis(request.getAppointmentId(), request.getDiagnosis());
         return new ResponseEntity<>(diagnosisCreated.toDTO(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-diagnosis/{id}")
     @ResponseBody
     public ResponseEntity<DiagnosisDTO> getDiagnosticById(@PathVariable int id) {
@@ -34,6 +36,7 @@ public class DiagnosisController {
         return new ResponseEntity<>(diagnosis.toDTO(),HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/get-all-diagnosis")
     @ResponseBody
     public ResponseEntity<List<DiagnosisDTO>> getAll() {
@@ -44,12 +47,14 @@ public class DiagnosisController {
         return new ResponseEntity<>(diagnosisDTOS, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-diagnosis/{id}")
     public ResponseEntity<Void> deleteDiagnosis(@PathVariable int id) {
         this.diagnosisService.deleteDiagnosis(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/update-diagnosis")
     public ResponseEntity<DiagnosisDTO> updateDiagnostic(@RequestBody Diagnosis diagnosis) {
         Diagnosis diagnosisUpdated = this.diagnosisService.updateDiagnosis(diagnosis);

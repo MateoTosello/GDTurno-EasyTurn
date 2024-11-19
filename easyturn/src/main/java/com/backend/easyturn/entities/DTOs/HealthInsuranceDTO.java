@@ -11,7 +11,7 @@ import java.util.List;
 public class HealthInsuranceDTO {
     private int id;
     private int healthInsuranceNumber;
-    private String healthInsuranceName;
+    private String name;
     private String healthInsurancePlan;
     private String healthInsuranceExpirationDate;
     private List<PatientShortDTO> patients;

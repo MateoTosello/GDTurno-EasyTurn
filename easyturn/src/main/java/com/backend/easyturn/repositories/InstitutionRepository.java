@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InstitutionRepository extends JpaRepository<Institution, Integer> {
 
-    Institution findByInstitutionName(String institutionName);
+    Institution findByName(String institutionName);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 public class InstitutionDTO {
     private int id;
-    private String institutionName;
+    private String name;
     private String institutionAddress;
     private String institutionAddressNumber;
     private List<ProfessionalShortDTO> professionals;
