@@ -34,7 +34,7 @@ public class Appointment {
     @Column(nullable = false)
     private AppointmentStatus appointmentStatus;
 
-    @Column(length = 1000)  // Limitar longitud de campo de texto. Analizar si ponemos estrellas.
+    @Column(length = 1000)  // Limitar longitud de campo de texto. Analizar si ponemos estrellas que provean la valoracion como "4: muy bueno"
     private String patientValoration;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,16 +61,6 @@ public class Appointment {
         COMPLETED,
         NO_SHOW
     }
-
-    // Agregar validación de fechas
-    @PrePersist
-    @PreUpdate
-    private void validateDates() {
-        if (appointmentDateTime.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("La fecha y hora del turno no puede ser anterior a hoy");
-        }
-    }
-
 
     public AppointmentDTO toDTO() {
         AppointmentDTO dto = new AppointmentDTO();
