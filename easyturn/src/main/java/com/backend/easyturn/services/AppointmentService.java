@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -34,6 +35,10 @@ public class AppointmentService {
     @Autowired
     private SpecialityRepository specialityRepository;
 
+    //horario de corrido de 08 a 16hs. turnos cada media hora.
+    private static final LocalTime START_TIME = LocalTime.of(8, 0);
+    private static final LocalTime END_TIME = LocalTime.of(16, 0);
+
     public Appointment createAppointment(Appointment appointment, int idPatient, int idProfessional, Long idSpeciality) {
         try {
             // Verificar que el paciente existe
@@ -47,21 +52,35 @@ public class AppointmentService {
             // Verificar que la especialidad existe
             Speciality speciality = this.specialityRepository.findById(idSpeciality)
                     .orElseThrow(() -> new NotFoundException("La especialidad no existe"));
-            // Verificar que la especialidad es una de
 
+            // Verificar que la especialidad es una del profesional
             if (!professional.getSpecialities().contains(speciality)) {
                 throw new AppException("El profesional no atiende la especialidad solicitada", HttpStatus.CONFLICT);
             }
 
-            // Definir el rango de tiempo (por ejemplo, 30 minutos antes y después) (Turnos cada 30 min)
-            LocalDateTime startTime = appointment.getAppointmentDateTime().minusMinutes(29);
-            LocalDateTime endTime = appointment.getAppointmentDateTime().plusMinutes(29);
-            // Verificar si existe algún turno en ese rango de tiempo
-            if(appointmentRepository.existsByProfessionalAndAppointmentDateTimeBetween(
-                    professional, startTime, endTime)) {
-                throw new IfClassExistsException(
-                        "Ya existe un turno para ese profesional en ese horario o muy cercano"
-                );
+            LocalDateTime appointmentDateTime = appointment.getAppointmentDateTime();
+
+            // Validar que fecha y hora sea posterior al momento de crear el turno
+            LocalDateTime now = LocalDateTime.now();
+            if (appointmentDateTime.isBefore(now)) {
+                throw new AppException("El turno debe ser posterior a la fecha y hora actual", HttpStatus.BAD_REQUEST);
+            }
+
+            // Validar horario de atención
+            LocalTime time = appointmentDateTime.toLocalTime();
+            if (time.isBefore(START_TIME) || time.isAfter(END_TIME)) {
+                throw new AppException("El horario del turno debe estar entre las 8:00 y 16:00 hs", HttpStatus.BAD_REQUEST);
+            }
+
+            // Validar turnos en punto y media hora
+            int minutes = time.getMinute();
+            if (minutes != 0 && minutes != 30) {
+                throw new AppException("Los turnos solo pueden ser en punto o y media (HH:00 o HH:30)", HttpStatus.BAD_REQUEST);
+            }
+
+            // Verificar disponibilidad del turno
+            if (appointmentRepository.existsByProfessionalAndAppointmentDateTime(professional, appointmentDateTime)) {
+                throw new AppException("Ya existe un turno para ese profesional en esa fecha y horario", HttpStatus.CONFLICT);
             }
 
             appointment.setPatient(patient);
@@ -72,7 +91,6 @@ public class AppointmentService {
         } catch (AppException e) {
             throw new AppException(e.getMessage(), e.getStatus());
         }
-
     }
 
     public List<Appointment> getAllAppointments() {
@@ -114,18 +132,33 @@ public class AppointmentService {
                     .orElseThrow(() -> new NotFoundException("Turno no encontrado"));
 
             // Actualizar solo los campos que están presentes en el appointment recibido
-
             if (appointment.getAppointmentDateTime() != null) {
+
+                // Validar que fecha y hora sea posterior al momento de crear el turno
+                LocalDateTime now = LocalDateTime.now();
+                if (appointment.getAppointmentDateTime().isBefore(now)) {
+                    throw new AppException("El turno debe ser posterior a la fecha y hora actual", HttpStatus.BAD_REQUEST);
+                }
+
+                // Validar horario de atención
+                LocalTime time = appointment.getAppointmentDateTime().toLocalTime();
+                if (time.isBefore(LocalTime.of(8, 0)) || time.isAfter(LocalTime.of(16, 0))) {
+                    throw new AppException("El horario del turno debe estar entre las 8:00 y 16:00 hs", HttpStatus.BAD_REQUEST);
+                }
+
+                // Validar turnos en punto y media hora
+                int minutes = time.getMinute();
+                if (minutes != 0 && minutes != 30) {
+                    throw new AppException("Los turnos solo pueden ser en punto o y media (HH:00 o HH:30)", HttpStatus.BAD_REQUEST);
+                }
+
                 // Verificar que si se modificó la fecha, no tenga conflictos de superposición
                 if (!existingAppointment.getAppointmentDateTime().equals(appointment.getAppointmentDateTime())) {
-                    // Definir el rango de tiempo
-                    LocalDateTime startTime = appointment.getAppointmentDateTime().minusMinutes(29);
-                    LocalDateTime endTime = appointment.getAppointmentDateTime().plusMinutes(29);
-                    // verificar si hay algun turno en dicho rango para el profesional del turno
-                    if (appointmentRepository.existsByProfessionalAndAppointmentDateTimeBetween(
-                            existingAppointment.getProfessional(), startTime, endTime)) {
-                        throw new IfClassExistsException(
-                                "Ya existe un turno para ese profesional en ese horario o muy cercano"
+                    // verificar si hay algun turno en dicho horario para el profesional del turno
+                    if (appointmentRepository.existsByProfessionalAndAppointmentDateTime(
+                            existingAppointment.getProfessional(), appointment.getAppointmentDateTime())) {
+                        throw new AppException(
+                                "Ya existe un turno para ese profesional en ese horario", HttpStatus.CONFLICT
                         );
                     }
                     existingAppointment.setAppointmentDateTime(appointment.getAppointmentDateTime());

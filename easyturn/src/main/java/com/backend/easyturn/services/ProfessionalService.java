@@ -17,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -168,4 +170,30 @@ public class ProfessionalService {
             throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public Set<Appointment> listAppointmentsByDate(Integer idProfessional, LocalDate date) {
+        // Validar que el ID del profesional no sea nulo
+        if (idProfessional == null) {
+            throw new AppException("El ID del profesional no puede ser nulo", HttpStatus.BAD_REQUEST);
+        }
+
+        // Validar que la fecha no sea nula
+        if (date == null) {
+            throw new AppException("La fecha no puede ser nula", HttpStatus.BAD_REQUEST);
+        }
+
+        // Verificar que el profesional existe
+        if (!professionalRepository.existsById(idProfessional)) {
+            throw new AppException("El profesional no existe", HttpStatus.NOT_FOUND);
+        }
+
+        try {
+            // Obtener los turnos del profesional en la fecha especificada
+            return professionalRepository.findAppointmentsByProfessionalAndDate(idProfessional, date);
+        } catch (Exception e) {
+            throw new AppException("Error al obtener los turnos: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
