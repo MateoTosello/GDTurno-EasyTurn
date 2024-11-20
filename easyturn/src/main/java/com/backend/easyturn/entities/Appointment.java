@@ -1,18 +1,24 @@
 package com.backend.easyturn.entities;
 
+import com.backend.easyturn.entities.DTOs.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(
+@Table(name = "appointment",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"appointmentDate", "appointmentTime","patientEmail","professionalRegistration"})
+                @UniqueConstraint(
+                        name = "UK_APPOINTMENT_DATETIME_PROF_PATIENT",
+                        columnNames = {"appointmentDateTime", "idProfessional", "idPatient"}
+                )
         }
 )
 public class Appointment {
@@ -20,37 +26,85 @@ public class Appointment {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAppointment;
+    private int idAppointment;
 
-    @Column
-    private LocalDate appointmentDate;
+    @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime appointmentDateTime;
 
-    @Column
-    private LocalTime appointmentTime;
+    @Enumerated(EnumType.STRING)  // Usar enum para status
+    @Column(nullable = false)
+    private AppointmentStatus appointmentStatus;
 
-    @Column
-    private String appointmentStatus;
-
-    @Column
+    @Column(length = 1000)  // Limitar longitud de campo de texto. Analizar si ponemos estrellas.
     private String patientValoration;
 
-    @Column(name = "patient_email", insertable = false, updatable = false)
-    private String patientEmail;
-
-    @ManyToOne
-    @JoinColumn(name = "idPatient", referencedColumnName = "idPatient", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idPatient", nullable = false)
     private Patient patient;
 
-    @ManyToOne
-    @JoinColumn(name = "idProfessional", referencedColumnName = "idProfessional", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idProfessional", nullable = false)
     private Professional professional;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idDiagnosis")
     private Diagnosis diagnosis;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idSpeciality")
+    @ManyToOne
+    @JoinColumn(name = "idSpeciality", nullable = false)
     private Speciality speciality;
 
+    // Enum para estado del turno
+    public enum AppointmentStatus {
+        SCHEDULED,
+        CONFIRMED,
+        CANCELLED,
+        COMPLETED,
+        NO_SHOW
+    }
+
+    // Agregar validación de fechas
+    @PrePersist
+    @PreUpdate
+    private void validateDates() {
+        if (appointmentDateTime.isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("La fecha y hora del turno no puede ser anterior a hoy");
+        }
+    }
+
+
+    public AppointmentDTO toDTO() {
+        AppointmentDTO dto = new AppointmentDTO();
+        dto.setIdAppointment(this.idAppointment);
+        dto.setAppointment_datetime(this.appointmentDateTime);
+        dto.setStatus(this.appointmentStatus);
+        dto.setValoration(this.patientValoration);
+
+        if (this.patient != null) {
+            PatientShortDTO patientDTO = new PatientShortDTO(
+                    this.patient.getIdPatient(),
+                    this.patient.getFirstName(),
+                    this.patient.getLastName()
+            );
+            dto.setPatient(patientDTO);
+        }
+
+        if (this.professional != null) {
+            ProfessionalShortDTO professionalDTO = new ProfessionalShortDTO(
+                    this.professional.getIdProfessional(),
+                    this.professional.getProfessionalName()
+            );
+            dto.setProfessional(professionalDTO);
+        }
+
+        if (this.speciality != null) {
+            SpecialityShortDTO specialityDTO = new SpecialityShortDTO(
+                    this.speciality.getIdSpeciality(),
+                    this.speciality.getSpecialityName()
+            );
+            dto.setSpeciality(specialityDTO);
+        }
+        return dto;
+    }
 }

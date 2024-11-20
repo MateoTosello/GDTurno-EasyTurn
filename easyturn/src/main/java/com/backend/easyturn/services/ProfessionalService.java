@@ -1,5 +1,6 @@
 package com.backend.easyturn.services;
 
+import com.backend.easyturn.entities.Appointment;
 import com.backend.easyturn.entities.Institution;
 import com.backend.easyturn.entities.Professional;
 import com.backend.easyturn.entities.Speciality;
@@ -154,6 +155,17 @@ public class ProfessionalService {
             return this.professionalRepository.save(prof);
         } catch (AppException e) {
             throw new AppException(e.getMessage(), e.getStatus());
+        }
+    }
+
+
+    public Set<Appointment> getAppointmentsByProfessional(int idProfessional) {
+        try {
+            Professional professional = this.professionalRepository.findById(idProfessional)
+                    .orElseThrow(() -> new AppException("El profesional no existe", HttpStatus.NOT_FOUND));
+            return professional.getAppointments();
+        } catch (Exception e) {
+            throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.backend.easyturn.entities.DTOs;
 
-import com.backend.easyturn.entities.HealthInsurance;
 import lombok.Getter;
 import lombok.Setter;
 
