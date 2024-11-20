@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -36,7 +34,7 @@ public class Appointment {
     @Column(nullable = false)
     private AppointmentStatus appointmentStatus;
 
-    @Column(length = 1000)  // Limitar longitud de campo de texto. Analizar si ponemos estrellas.
+    @Column(length = 1000)  // Limitar longitud de campo de texto. Analizar si ponemos estrellas que provean la valoracion como "4: muy bueno"
     private String patientValoration;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -63,16 +61,6 @@ public class Appointment {
         COMPLETED,
         NO_SHOW
     }
-
-    // Agregar validación de fechas
-    @PrePersist
-    @PreUpdate
-    private void validateDates() {
-        if (appointmentDateTime.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("La fecha y hora del turno no puede ser anterior a hoy");
-        }
-    }
-
 
     public AppointmentDTO toDTO() {
         AppointmentDTO dto = new AppointmentDTO();
@@ -107,4 +95,17 @@ public class Appointment {
         }
         return dto;
     }
+
+    public AppointmentShortDTO toShortDTO() {
+        // Convertimos el paciente a PatientShortDTO
+        PatientShortDTO patientShortDTO = this.patient.toShortDTO();
+
+        // Creamos y retornamos el nuevo AppointmentShortDTO
+        return new AppointmentShortDTO(
+                this.idAppointment,
+                this.appointmentDateTime,
+                patientShortDTO
+        );
+    }
+
 }
