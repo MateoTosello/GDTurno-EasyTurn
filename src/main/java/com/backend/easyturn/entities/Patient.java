@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.apache.catalina.User;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -87,7 +88,7 @@ public class Patient implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_PATIENT"));
     }
 
     @Override

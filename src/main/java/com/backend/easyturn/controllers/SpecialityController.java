@@ -10,6 +10,7 @@ import com.backend.easyturn.services.SpecialityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,6 +25,7 @@ public class SpecialityController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/create-speciality")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<SpecialityDTO> createSpeciality(@RequestBody Speciality speciality) {
         Speciality specialityCreated = this.specialityService.createSpeciality(speciality);
@@ -51,6 +53,7 @@ public class SpecialityController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-speciality/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<Void> deleteProfessional(@PathVariable long id) {
         this.specialityService.deleteSpecialityById(id);
@@ -59,6 +62,7 @@ public class SpecialityController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/update-speciality")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<SpecialityDTO> updateSpeciality(@RequestBody Speciality speciality) {
         Speciality specialityUpdated = this.specialityService.updateSpeciality(speciality);

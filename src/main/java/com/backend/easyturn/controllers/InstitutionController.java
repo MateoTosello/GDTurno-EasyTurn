@@ -9,6 +9,7 @@ import com.backend.easyturn.services.InstitutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class InstitutionController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<InstitutionDTO> createInstitution(@RequestBody Institution institution) {
         Institution institutionCreated = this.institutionService.createInstitution(institution);
@@ -50,6 +52,7 @@ public class InstitutionController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<String> deleteInstitution(@PathVariable int id) {
         this.institutionService.deleteInstitution(id);
@@ -58,6 +61,7 @@ public class InstitutionController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<InstitutionDTO> updateInstitution(@RequestBody Institution institution) {
         Institution institutionUpdated = this.institutionService.updateInstitution(institution);

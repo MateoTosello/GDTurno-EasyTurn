@@ -6,6 +6,7 @@ import com.backend.easyturn.services.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class AdministratorController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path="/post")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<AdministratorDTO> createAdministrator(@RequestBody Administrator administrator) {
         AdministratorDTO administratorDTO = this.administratorService.createAdministrator(administrator);
@@ -26,6 +28,7 @@ public class AdministratorController {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path="/get-administrators")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<List<AdministratorDTO>> getAdministrators(){
         List<AdministratorDTO> administrators = this.administratorService.getAllAdministrator();
@@ -34,6 +37,7 @@ public class AdministratorController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping(path="/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteAdministrator(@PathVariable int id) {
         this.administratorService.deleteAdministrator(id);
         return new ResponseEntity<>("Administrador eliminado correctamente",HttpStatus.OK);
@@ -41,6 +45,7 @@ public class AdministratorController {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path = "/get-administrator/{idAdmin}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<AdministratorDTO> getAdministrator(@PathVariable int idAdmin){
         AdministratorDTO administrator = this.administratorService.getAdministrator(idAdmin);
@@ -49,6 +54,7 @@ public class AdministratorController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<AdministratorDTO> updateAdministrator(@RequestBody Administrator administrator) {
         AdministratorDTO administratorDTO = this.administratorService.updateAdministrator(administrator);

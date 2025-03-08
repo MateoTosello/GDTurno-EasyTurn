@@ -9,6 +9,7 @@ import com.backend.easyturn.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class PatientController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/post")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientRequest request){
         Patient patientCreated = this.patientService.createPatient(request.getPatient(), request.getIdHealthInsurance());
@@ -48,6 +50,7 @@ public class PatientController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/update-patient")
+    @PreAuthorize("hasRole('PATIENT') or hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<PatientDTO> updatePatient(@RequestBody PatientRequest request){
         Patient patientUpdated = this.patientService.updatePatient(request.getPatient(), request.getIdHealthInsurance());

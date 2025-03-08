@@ -12,6 +12,7 @@ import com.backend.easyturn.services.ProfessionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ public class ProfessionalController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/post")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> createProfessional(@RequestBody ProfessionalRequest request) {
         Professional professionalCreated = this.professionalService.createProfessional(request.getProfessional(), request.getSpecialitiesIds(), request.getInstitutionsIds());
@@ -56,6 +58,7 @@ public class ProfessionalController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-professional/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<Void> deleteProfessional(@PathVariable int id) {
         this.professionalService.deleteProfessional(id);
@@ -64,6 +67,7 @@ public class ProfessionalController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/update-professional")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> updateProfessional(@RequestBody Professional professional) {
         Professional professionalUpdated = this.professionalService.updateProfessional(professional);
@@ -72,6 +76,7 @@ public class ProfessionalController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("add-specialities/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSIONAL')")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> addSpeciality(@PathVariable int id, @RequestBody List<Long> specialitiesIds){
         Professional professionalUpdated = this.professionalService.addSpecialities(id,specialitiesIds);
@@ -80,6 +85,7 @@ public class ProfessionalController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("add-institutions/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSIONAL')")
     @ResponseBody
     public ResponseEntity<ProfessionalDTO> addInstitution(@PathVariable int id, @RequestBody List<Integer> institutionsIds){
         Professional professionalUpdated = this.professionalService.addInstitutions(id,institutionsIds);
@@ -98,6 +104,8 @@ public class ProfessionalController {
     }
 
     @GetMapping("/appointments/date")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSIONAL')")
+    @CrossOrigin(origins = "*")
     @ResponseBody
     public ResponseEntity<List<AppointmentShortDTO>> getAppointmentsByDate(@RequestBody AppointmentSearchDateDTO filterDateDTO) {
 

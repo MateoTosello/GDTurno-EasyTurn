@@ -10,6 +10,7 @@ import com.backend.easyturn.services.DiagnosisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public class DiagnosisController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/post")
+    @PreAuthorize("hasRole('PROFESSIONAL') or hasRole('ADMIN')")
+    @ResponseBody
     public ResponseEntity<DiagnosisDTO> createDiagnosis(@RequestBody DiagnosisRequest request) {
         Diagnosis diagnosisCreated = this.diagnosisService.createDiagnosis(request.getAppointmentId(), request.getDiagnosis());
         return new ResponseEntity<>(diagnosisCreated.toDTO(), HttpStatus.OK);
@@ -49,6 +52,8 @@ public class DiagnosisController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-diagnosis/{id}")
+    @PreAuthorize("hasRole('PROFESSIONAL') or hasRole('ADMIN')")
+    @ResponseBody
     public ResponseEntity<Void> deleteDiagnosis(@PathVariable int id) {
         this.diagnosisService.deleteDiagnosis(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -56,6 +61,8 @@ public class DiagnosisController {
 
     @CrossOrigin(origins = "*")
     @PutMapping("/update-diagnosis")
+    @PreAuthorize("hasRole('PROFESSIONAL') or hasRole('ADMIN')")
+    @ResponseBody
     public ResponseEntity<DiagnosisDTO> updateDiagnostic(@RequestBody Diagnosis diagnosis) {
         Diagnosis diagnosisUpdated = this.diagnosisService.updateDiagnosis(diagnosis);
         return new ResponseEntity<>(diagnosisUpdated.toDTO(),HttpStatus.OK);
