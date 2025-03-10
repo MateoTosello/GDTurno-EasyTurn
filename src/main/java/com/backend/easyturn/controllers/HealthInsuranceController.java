@@ -1,13 +1,11 @@
 package com.backend.easyturn.controllers;
 
-
-import com.backend.easyturn.GlobalExceptionHandler;
 import com.backend.easyturn.entities.DTOs.HealthInsuranceDTO;
-import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
+
 import com.backend.easyturn.entities.HealthInsurance;
-import com.backend.easyturn.entities.Professional;
+
 import com.backend.easyturn.exceptions.AppException;
-import com.backend.easyturn.requests.ProfessionalRequest;
+
 import com.backend.easyturn.services.HealthInsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +21,10 @@ public class HealthInsuranceController {
 
     @Autowired
     HealthInsuranceService healthInsuranceService;
+
+
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/")
+    @GetMapping(value = "/get-all")
     @ResponseBody
     public ResponseEntity<List<HealthInsuranceDTO>> getAll() throws AppException {
         List<HealthInsurance> healthInsurances = this.healthInsuranceService.getAllHealthInsurances();
@@ -33,6 +33,8 @@ public class HealthInsuranceController {
                 .toList();
         return new ResponseEntity<>(healthInsurancesDTO, HttpStatus.OK);
     }
+
+
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/{id}")
     @ResponseBody
@@ -41,8 +43,8 @@ public class HealthInsuranceController {
         return new ResponseEntity<>(healthInsurance.toDTO(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/")
     @CrossOrigin(origins = "*")
+    @PostMapping(value = "/")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<HealthInsurance> createHealthInsurance(@RequestBody HealthInsurance healthInsurance) {

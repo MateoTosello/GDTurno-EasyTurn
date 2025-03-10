@@ -1,18 +1,17 @@
 package com.backend.easyturn.controllers;
 
 
-import com.backend.easyturn.entities.DTOs.ProfessionalDTO;
+
 import com.backend.easyturn.entities.DTOs.SpecialityDTO;
-import com.backend.easyturn.entities.Professional;
+
 import com.backend.easyturn.entities.Speciality;
-import com.backend.easyturn.requests.ProfessionalRequest;
+
 import com.backend.easyturn.services.SpecialityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -69,6 +68,7 @@ public class SpecialityController {
         return new ResponseEntity<>(specialityUpdated.toDTO(), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/speciality-names")
     @ResponseBody
     public ResponseEntity<List<String>> getAllSpecialityNames() {
