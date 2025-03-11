@@ -25,7 +25,6 @@ public class PatientController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/post")
-    @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientRequest request){
         Patient patientCreated = this.patientService.createPatient(request.getPatient(), request.getIdHealthInsurance());
@@ -59,6 +58,7 @@ public class PatientController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-patient/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PATIENT')")
     @ResponseBody
     public ResponseEntity<Void> deletePatient(@PathVariable int id){
         this.patientService.deletePatient(id);

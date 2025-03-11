@@ -34,8 +34,12 @@ public class SecurityConfig {
                             .requestMatchers("/professional/get-professional/{idProfessional}").permitAll()
                            .requestMatchers("/institution/").permitAll()
                             .requestMatchers(HttpMethod.GET,"/healthinsurance/{id}").permitAll()
-
-
+                           .requestMatchers("/patient/get-all-patients").permitAll()
+                            .requestMatchers("/patient/get-patient/{id}").permitAll()
+                            .requestMatchers("/patient/post").permitAll()
+                            .requestMatchers("/appointment/get-all-appointments").permitAll()
+                            .requestMatchers("/appointment/get-appointment/{id}").permitAll()
+                           .requestMatchers("/patient/appointments/{id}").permitAll()
                             .anyRequest().authenticated();
                 })
                 .sessionManagement((sessionManagement) -> {
